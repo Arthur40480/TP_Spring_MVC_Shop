@@ -5,11 +5,13 @@ import fr.ldnr.entities.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class IBusinessImpl implements IBusiness{
     @Autowired
     ArticleRepository articleRepository;
@@ -42,6 +44,7 @@ public class IBusinessImpl implements IBusiness{
         List<Article> articleList = articleRepository.findAll();
         for (Article article : articleList) {
             if (newArticle.getDescription().equals(article.getDescription()) && newArticle.getBrand().equals(article.getBrand())) {
+                System.out.println("Pas egal !");
                 return false;
             }
         }

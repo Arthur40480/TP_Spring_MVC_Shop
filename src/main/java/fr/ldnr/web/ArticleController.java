@@ -1,9 +1,7 @@
 package fr.ldnr.web;
 
-import ch.qos.logback.core.CoreConstants;
-import fr.ldnr.dao.ArticleRepository;
+import fr.ldnr.business.IBusinessImpl;
 import fr.ldnr.entities.Article;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,23 +9,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class ArticleController {
-    @Autowired
-    ArticleRepository articleRepository;
+
+    private final IBusinessImpl business;
+
+    public ArticleController(IBusinessImpl business) {
+        this.business = business;
+    }
 
     //@RequestMapping(value="/index", method=RequestMethod.GET)
     @GetMapping("/index")
     public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw) {
-        Page<Article> articles = articleRepository.findByDescriptionContains(kw, (Pageable) PageRequest.of(page, 5));
+        Page<Article> articles = business.findArticleByDescriptionContains(kw, (Pageable) PageRequest.of(page, 5));
         model.addAttribute("keyword", kw);
         model.addAttribute("listArticle", articles.getContent());
         model.addAttribute("pages", new int[articles.getTotalPages()]);
@@ -38,13 +38,13 @@ public class ArticleController {
 
     @GetMapping("/delete")
     public String delete(Long id, int page, String keyword) {
-        articleRepository.deleteById(id);
+        business.deleteArticleById(id);
         return "redirect:/index?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping("/updateForm")
     public String updateForm(Model model, @RequestParam(name = "idArticle") Long id) {
-        Optional<Article> optionalArticleToUpdate = articleRepository.findById(id);
+        Optional<Article> optionalArticleToUpdate = business.findArticleById(id);
         if(optionalArticleToUpdate.isPresent()) {
             Article articleToUpdate = optionalArticleToUpdate.get();
             model.addAttribute("article", articleToUpdate);
@@ -57,14 +57,14 @@ public class ArticleController {
         if(bindingResult.hasErrors()) {
             return "updateArticle";
         }else {
-            Optional<Article> optionalArticleFromDB = articleRepository.findById(id);
+            Optional<Article> optionalArticleFromDB = business.findArticleById(id);
             if(optionalArticleFromDB.isPresent()) {
                 Article articleFromDB = optionalArticleFromDB.get();
                 articleFromDB.setId(articleFromDB.getId());
                 articleFromDB.setBrand(articleToUpdate.getBrand());
                 articleFromDB.setDescription(articleToUpdate.getDescription());
                 articleFromDB.setPrice(articleToUpdate.getPrice());
-                articleRepository.save(articleFromDB);
+                business.createArticle(articleFromDB);
             }
             return "redirect:/index";
         }
@@ -73,13 +73,13 @@ public class ArticleController {
     @GetMapping("/article")
     public String article(Model model) {
         model.addAttribute("article", new Article());
-        return "article";
+        return "createArticle";
     }
 
     @PostMapping("/save")
     public String save(Model model, @Valid Article article, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) return "article";
-        articleRepository.save(article);
+        business.createArticle(article);
         return "redirect:/index";
     }
 }

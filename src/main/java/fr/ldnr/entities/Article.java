@@ -39,4 +39,5 @@ public class Article implements Serializable {
 		this.price = price;
 		this.category = cat;
 	}
+
 }
