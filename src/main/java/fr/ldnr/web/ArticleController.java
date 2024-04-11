@@ -52,7 +52,6 @@ public class ArticleController {
         return "updateArticle";
     }
 
-
     @PostMapping("/update")
     public String update(Long id, @Valid Article articleToUpdate, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {

@@ -20,13 +20,14 @@
                     </form>
                     <table class="table">
                         <tr>
-                            <th>Id</th> <th>Marque</th> <th>Description</th> <th>Prix</th>
+                            <th>Id</th> <th>Brand</th> <th>Description</th> <th>Price</th> <th>Category</th>
                         </tr>
                         <tr th:each="a:${listArticle}">
                             <td th:text="${a.id}"></td>
                             <td th:text="${a.brand}"></td>
                             <td th:text="${a.description}"></td>
                             <td th:text="${a.price}"></td>
+                            <td th:text="${a.category.name}"></td>
                             <td>
                                 <a class="btn btn-danger" th:href="@{/delete(id=${a.id}, page=${currentPage}, keyword=${keyword})}">Delete</a>
                             </td>

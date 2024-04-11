@@ -26,9 +26,9 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String...args) throws Exception {
-		Category phone = categoryRepository.save(new Category("smartphone" , "telephono dernier cris"));
-		Category tv = categoryRepository.save(new Category("tv" , "tv ecran plat"));
-		Category pc = categoryRepository.save(new Category("pc" , "laptop ecran oled"));
+		Category phone = categoryRepository.save(new Category("Smartphone" , "telephono dernier cris"));
+		Category tv = categoryRepository.save(new Category("TV" , "tv ecran plat"));
+		Category pc = categoryRepository.save(new Category("PC" , "laptop ecran oled"));
 
 		articleRepository.save(new Article("Samsung", "S10", 599 , phone));
 		articleRepository.save(new Article("Apple", "15Pro", 1099 , tv));
