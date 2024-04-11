@@ -23,7 +23,7 @@ public class Article implements Serializable {
 	private Long id;
 	@NotNull @Size(min=1,max=20)
 	private String brand;
-	@NotNull @Size(min=10,max=50)
+	@NotNull @Size(min=1,max=50)
 	private String description;
 	@DecimalMin("50")
 	private double price;

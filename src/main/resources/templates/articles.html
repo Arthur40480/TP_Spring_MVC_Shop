@@ -20,10 +20,11 @@
                     </form>
                     <table class="table">
                         <tr>
-                            <th>Id</th> <th>Description</th> <th>Prix</th>
+                            <th>Id</th> <th>Marque</th> <th>Description</th> <th>Prix</th>
                         </tr>
                         <tr th:each="a:${listArticle}">
                             <td th:text="${a.id}"></td>
+                            <td th:text="${a.brand}"></td>
                             <td th:text="${a.description}"></td>
                             <td th:text="${a.price}"></td>
                             <td>
