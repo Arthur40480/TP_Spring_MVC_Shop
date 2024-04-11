@@ -27,15 +27,13 @@ public class Article implements Serializable {
 	@ManyToOne
 	private Category category;
 	
-	public Article(String brand, String description, double price)
-	{
+	public Article(String brand, String description, double price) {
 		this.brand = brand;
 		this.description = description;
 		this.price = price;
 	}
 
-	public Article(String description, String brand, double price, Category cat)
-	{
+	public Article(String description, String brand, double price, Category cat) {
 		this.description = description;
 		this.brand = brand;
 		this.price = price;
