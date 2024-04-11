@@ -21,9 +21,9 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String...args) throws Exception {
-		articleRepository.save(new Article("Samsung s32342213", 250));
-		articleRepository.save(new Article("Samsung s9efzezefezffff", 500));
-		articleRepository.save(new Article("Samsung s10ezfezfezfzef", 800));
+		articleRepository.save(new Article("Samsung", "S10", 599));
+		articleRepository.save(new Article("Apple", "15Pro", 1099));
+		articleRepository.save(new Article("Apple", "XS", 859));
 /*		articleRepository.save(new Article("Iphone XS", 350));
 		articleRepository.save(new Article("Iphone 15Pro", 900));
 		articleRepository.save(new Article("Xiaomi", 80));

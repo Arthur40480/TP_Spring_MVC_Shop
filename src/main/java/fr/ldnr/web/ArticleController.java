@@ -62,6 +62,7 @@ public class ArticleController {
             if(optionalArticleFromDB.isPresent()) {
                 Article articleFromDB = optionalArticleFromDB.get();
                 articleFromDB.setId(articleFromDB.getId());
+                articleFromDB.setBrand(articleToUpdate.getBrand());
                 articleFromDB.setDescription(articleToUpdate.getDescription());
                 articleFromDB.setPrice(articleToUpdate.getPrice());
                 articleRepository.save(articleFromDB);

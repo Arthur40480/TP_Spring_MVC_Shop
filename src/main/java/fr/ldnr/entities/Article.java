@@ -21,15 +21,15 @@ public class Article implements Serializable {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-
-	@NotNull
-	@Size(min=10,max=50)
+	@NotNull @Size(min=1,max=20)
+	private String brand;
+	@NotNull @Size(min=1,max=50)
 	private String description;
-
 	@DecimalMin("50")
 	private double price;
 	
-	public Article(String description, double price) {
+	public Article(String brand, String description, double price) {
+		this.brand = brand;
 		this.description = description;
 		this.price = price;
 	}
