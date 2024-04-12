@@ -2,7 +2,9 @@ package fr.ldnr.web;
 
 import ch.qos.logback.core.CoreConstants;
 import fr.ldnr.dao.ArticleRepository;
+import fr.ldnr.dao.CategoryRepository;
 import fr.ldnr.entities.Article;
+import fr.ldnr.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,12 +26,17 @@ public class ArticleController {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     //@RequestMapping(value="/index", method=RequestMethod.GET)
     @GetMapping("/index")
     public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw) {
         Page<Article> articles = articleRepository.findByDescriptionContains(kw, (Pageable) PageRequest.of(page, 5));
+        List<Category> categories = categoryRepository.findAll();
         model.addAttribute("keyword", kw);
         model.addAttribute("listArticle", articles.getContent());
+        model.addAttribute("listCategories" , categories);
         model.addAttribute("pages", new int[articles.getTotalPages()]);
         model.addAttribute("currentPage", page);
 
@@ -82,4 +89,7 @@ public class ArticleController {
         articleRepository.save(article);
         return "redirect:/index";
     }
+
+   
+
 }
