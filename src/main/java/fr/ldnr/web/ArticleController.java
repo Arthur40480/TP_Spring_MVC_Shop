@@ -82,4 +82,10 @@ public class ArticleController {
         business.createArticle(article);
         return "redirect:/index";
     }
+
+    //page de connexion
+    @GetMapping("/loggin")
+    public String loggin(){
+        return "loggin";
+    }
 }
