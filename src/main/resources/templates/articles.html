@@ -1,24 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout" lang="fr">
-    <head>
-        <meta charset="ISO-8859-1">
-        <title>Mes Articles</title>
-        <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}">
-    </head>
-    <body>
-    <div layout:fragment="content">
-        <div class="container">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Liste des articles</div>
-                <div class="panel-body">
-                    <form th:action="@{/index}" method="get">
-                        <label>keyword</label>
-                        <input type="text" name="keyword" th:value="${keyword}">
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
-                    <table class="table">
+<html xmlns:th = "http://thymeLeaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate = "layout">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+<body>
+<div layout:fragment = "content">
+    <div class = "container">
+        <ul class="nav nav-pills">
+            <li th:each="cat:${listCategories}">
+                <a th:href = "@{/catArticles (id=${cat.id} , category=${cat.name})}" th:text = "${cat.name}"></a>
+            </li>
+        </ul>
+
+        <br>
+
+        <div class = "panel panel-primary">
+            <div class = "panel-heading">List des Articles</div>
+            <div class = "panel-body">
+
+                <form th:action ="@{/index}" method = "get">
+                    <label>keyword</label>
+                    <input type = "text" name = "keyword" th:value = "${keyword}">
+                    <button type = "submit" class = "btn btn-primary"> search </button>
+                </form>
+
+                <br>
+
+                <table class = "table" >
                         <tr>
                             <th>Id</th> <th>Brand</th> <th>Description</th> <th>Price</th> <th>Category</th>
                         </tr>
@@ -36,14 +48,15 @@
                             </td>
                         </tr>
                     </table>
+                    <br>
+                    <ul class="nav nav-pills">
+                        <li th:class="${currentPage == status.index}?'active':''" th:each="page, status:${pages}">
+                            <a th:href = "@{/index(page=${status.index}, keyword=${keyword})}" th:text="${status.index}"></a>
+                        </li>
+                    </ul>
                 </div>
-                <ul class="nav nav-pills">
-                    <li th:class="${currentPage == status.index}?'active':''" th:each="page, status:${pages}">
-                        <a th:href = "@{/index(page=${status.index}, keyword=${keyword})}" th:text="${status.index}"></a>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
-    </body>
+</body>
 </html>
