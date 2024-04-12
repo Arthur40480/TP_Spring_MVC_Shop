@@ -2,6 +2,7 @@ package fr.ldnr.web;
 
 
 import fr.ldnr.business.IBusinessImpl;
+import fr.ldnr.dao.ArticleRepository;
 import fr.ldnr.entities.Article;
 
 import fr.ldnr.dao.CategoryRepository;
@@ -31,20 +32,29 @@ public class ArticleController {
     public ArticleController(IBusinessImpl business) {
         this.business = business;
     }
-
+    @Autowired
+    ArticleRepository articleRepository;
     @Autowired
     CategoryRepository categoryRepository;
 
     //@RequestMapping(value="/index", method=RequestMethod.GET)
     @GetMapping("/index")
-    public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw) {
-
-        Page<Article> articles = business.findArticleByDescriptionContains(kw, (Pageable) PageRequest.of(page, 5));
+    public String index(Model model,
+                        @RequestParam(name="categoryId", required = false)Long categoryId,
+                        @RequestParam(name = "page", defaultValue = "0") int page,
+                        @RequestParam(name = "keyword", defaultValue = "") String kw) {
+        Page<Article> articles;
+        if(categoryId != null) {
+            model.addAttribute("categoryId", categoryId);
+            articles = articleRepository.findByCategoryId(categoryId, (Pageable) PageRequest.of(page, 5));
+        }else {
+            articles = business.findArticleByDescriptionContains(kw, (Pageable) PageRequest.of(page, 5));
+        }
 
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("keyword", kw);
         model.addAttribute("listArticle", articles.getContent());
-        model.addAttribute("listCategories" , categories);
+        model.addAttribute("listCategories", categories);
         model.addAttribute("pages", new int[articles.getTotalPages()]);
         model.addAttribute("currentPage", page);
 
@@ -106,11 +116,12 @@ public class ArticleController {
     }
 
     @GetMapping("/catArticles")
-    public String catArticles(Model model, Long id , @RequestParam(name = "page", defaultValue = "0") int page)
+    public String catArticles(Model model, @RequestParam(name="categoryId") Long id, @RequestParam(name = "page", defaultValue = "0") int page)
     {
         Page<Article> articles = categoryRepository.findArticlesByCategoryId(id ,  (Pageable) PageRequest.of(page, 5));
         List<Category> categories = categoryRepository.findAll();
 
+        model.addAttribute("categoryId", id);
         model.addAttribute("listArticle", articles.getContent());
         model.addAttribute("listCategories" , categories);
         model.addAttribute("pages", new int[articles.getTotalPages()]);
@@ -118,6 +129,5 @@ public class ArticleController {
 
         return "articles";
     }
-
 
 }
