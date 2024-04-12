@@ -12,7 +12,7 @@
     <div class = "container">
         <ul class="nav nav-pills">
             <li th:each="cat:${listCategories}">
-                <a th:href = "@{/catArticles(categoryId=${cat.id} , category=${cat.name})}" th:text = "${cat.name}"></a>
+                <a th:href = "@{/index (id=${cat.id} , category=${cat.name})}" th:text = "${cat.name}"></a>
             </li>
         </ul>
 
@@ -48,10 +48,11 @@
                             </td>
                         </tr>
                     </table>
+
                     <br>
-                    <ul class="nav nav-pills">
-                        <li th:class="${currentPage == status.index}?'active':''" th:each="page, status:${pages}">
-                            <a th:href = "@{/index(categoryId=${categoryId}, page=${status.index}, keyword=${keyword})}" th:text="${status.index}"></a>
+                    <ul class="nav nav-pills" >
+                        <li th:class="${currentPage == status.index}?'active':''" th:each="page, status:${pages}" >
+                            <a th:href = "@{/index(id=${idCat != null}?${idCat}:'' , page=${status.index}, keyword=${keyword})}" th:text="${status.index}"></a>
                         </li>
                     </ul>
                 </div>
