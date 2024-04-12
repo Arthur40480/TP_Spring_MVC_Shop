@@ -14,5 +14,5 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<Category , Long>
 {
     @Query ("select a from Article a where a.category.id = :categoryId")
-    List<Article> findArticlesByCategoryId(@Param("categoryId") Long categoryId);
+    Page<Article> findArticlesByCategoryId(@Param("categoryId") Long categoryId , Pageable pageable);
 }

@@ -91,13 +91,16 @@ public class ArticleController {
     }
 
     @GetMapping("/catArticles")
-    public String catArticles(Model model, Long id)
+    public String catArticles(Model model, Long id , @RequestParam(name = "page", defaultValue = "0") int page)
     {
-        List<Article> articles = categoryRepository.findArticlesByCategoryId(id);
+        Page<Article> articles = categoryRepository.findArticlesByCategoryId(id ,  (Pageable) PageRequest.of(page, 5));
         List<Category> categories = categoryRepository.findAll();
 
-        model.addAttribute("listArticle", articles);
+        model.addAttribute("listArticle", articles.getContent());
         model.addAttribute("listCategories" , categories);
+        model.addAttribute("pages", new int[articles.getTotalPages()]);
+        model.addAttribute("currentPage", page);
+
         return "articles";
     }
 
