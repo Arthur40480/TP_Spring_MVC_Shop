@@ -90,6 +90,15 @@ public class ArticleController {
         return "redirect:/index";
     }
 
-   
+    @GetMapping("/catArticles")
+    public String catArticles(Model model, Long id)
+    {
+        List<Article> articles = categoryRepository.findArticlesByCategoryId(id);
+        List<Category> categories = categoryRepository.findAll();
+
+        model.addAttribute("listArticle", articles);
+        model.addAttribute("listCategories" , categories);
+        return "articles";
+    }
 
 }
