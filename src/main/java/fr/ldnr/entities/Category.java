@@ -13,13 +13,9 @@ import java.util.Collection;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class Category implements Serializable
-{
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+public class Category implements Serializable {
+    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-
     @NotNull
     @Size(min=1,max=30)
     private String name;
@@ -29,8 +25,7 @@ public class Category implements Serializable
     @OneToMany(mappedBy = "category")
     private Collection<Article> articles;
 
-    public Category(String name , String description)
-    {
+    public Category(String name , String description) {
         this.name = name;
         this.description = description;
     }

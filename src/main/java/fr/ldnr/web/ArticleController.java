@@ -36,33 +36,20 @@ public class ArticleController {
     //@RequestMapping(value="/index", method=RequestMethod.GET)
     @GetMapping("/index")
     public String index(Model model, Long id ,@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw) {
-
         List<Category> categories = categoryRepository.findAll();
-
-        if(id == null)
-        {
-            Page<Article> articles = business.findArticleByDescriptionContains(kw, (Pageable) PageRequest.of(page, 5));
-
+        Page<Article> articles;
+        if(id == null) {
+            articles = business.findArticleByDescriptionContains(kw, (Pageable) PageRequest.of(page, 5));
             model.addAttribute("keyword", kw);
-            model.addAttribute("listArticle", articles.getContent());
-            model.addAttribute("listCategories" , categories);
-            model.addAttribute("pages", new int[articles.getTotalPages()]);
-            model.addAttribute("currentPage", page);
-
-            return "articles";
-        }
-        else
-        {
-            Page<Article> articles = categoryRepository.findArticlesByCategoryId(id ,  (Pageable) PageRequest.of(page, 5));
-
+        }else {
+            articles = categoryRepository.findArticlesByCategoryId(id ,  (Pageable) PageRequest.of(page, 5));
             model.addAttribute("idCat" , id);
-            model.addAttribute("listArticle", articles.getContent());
-            model.addAttribute("listCategories" , categories);
-            model.addAttribute("pages", new int[articles.getTotalPages()]);
-            model.addAttribute("currentPage", page);
-
-            return "articles";
         }
+        model.addAttribute("listArticle", articles.getContent());
+        model.addAttribute("listCategories" , categories);
+        model.addAttribute("pages", new int[articles.getTotalPages()]);
+        model.addAttribute("currentPage", page);
+        return "articles";
     }
 
     @GetMapping("/delete")
@@ -112,8 +99,6 @@ public class ArticleController {
         return "redirect:/index";
     }
 
-
-    //page de connexion
     @GetMapping("/loggin")
     public String loggin(){
         return "loggin";

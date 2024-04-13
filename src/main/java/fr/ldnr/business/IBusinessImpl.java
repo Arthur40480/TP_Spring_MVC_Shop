@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class IBusinessImpl implements IBusiness{
+public class IBusinessImpl implements IBusiness {
     @Autowired
     ArticleRepository articleRepository;
 
