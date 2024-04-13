@@ -1,13 +1,14 @@
 package fr.ldnr.business;
 
 import fr.ldnr.dao.ArticleRepository;
+import fr.ldnr.dao.CategoryRepository;
 import fr.ldnr.entities.Article;
+import fr.ldnr.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,16 @@ import java.util.Optional;
 public class IBusinessImpl implements IBusiness {
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    /**
+     * Récupère tous les articles
+     * @return Liste contenant tous les articles
+     */
+    public List<Article> findAllArticle() {
+        return articleRepository.findAll();
+    }
 
     /**
      * Récupère un article par son identifiant
@@ -36,6 +47,16 @@ public class IBusinessImpl implements IBusiness {
     }
 
     /**
+     * Récupère une page d'article appartenant à une catégorie
+     * @param categoryId l'id de la catégorie
+     * @param pageable l'objet Pageable(numéro de page, taille de page)
+     * @return Page d'article
+     */
+    public Page<Article> findArticlesByCategoryId(Long categoryId, Pageable pageable) {
+        return articleRepository.findByCategoryId(categoryId, pageable);
+    }
+
+    /**
      * Crée un nouvel article
      * @param newArticle Article à créer
      * @return true si l'article à été crée avec succès, false sinon
@@ -44,7 +65,6 @@ public class IBusinessImpl implements IBusiness {
         List<Article> articleList = articleRepository.findAll();
         for (Article article : articleList) {
             if (newArticle.getDescription().equals(article.getDescription()) && newArticle.getBrand().equals(article.getBrand())) {
-                System.out.println("Pas egal !");
                 return false;
             }
         }
@@ -65,5 +85,13 @@ public class IBusinessImpl implements IBusiness {
         }else {
             return false;
         }
+    }
+
+    /**
+     * Récupère toute les catégories
+     * @return List des catégories
+     */
+    public List<Category> findAllCategories() {
+        return categoryRepository.findAll();
     }
 }

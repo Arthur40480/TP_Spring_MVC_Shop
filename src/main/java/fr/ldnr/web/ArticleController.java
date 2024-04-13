@@ -28,25 +28,21 @@ public class ArticleController {
     public ArticleController(IBusinessImpl business) {
         this.business = business;
     }
-    @Autowired
-    ArticleRepository articleRepository;
-    @Autowired
-    CategoryRepository categoryRepository;
 
     //@RequestMapping(value="/index", method=RequestMethod.GET)
     @GetMapping("/index")
     public String index(Model model, Long id ,@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw) {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = business.findAllCategories();
         Page<Article> articles;
         if(id == null) {
-            articles = business.findArticleByDescriptionContains(kw, (Pageable) PageRequest.of(page, 5));
+            articles = business.findArticleByDescriptionContains(kw,(Pageable) PageRequest.of(page, 5));
             model.addAttribute("keyword", kw);
         }else {
-            articles = categoryRepository.findArticlesByCategoryId(id ,  (Pageable) PageRequest.of(page, 5));
-            model.addAttribute("idCat" , id);
+            articles = business.findArticlesByCategoryId(id,(Pageable) PageRequest.of(page, 5));
+            model.addAttribute("idCat", id);
         }
         model.addAttribute("listArticle", articles.getContent());
-        model.addAttribute("listCategories" , categories);
+        model.addAttribute("listCategories", categories);
         model.addAttribute("pages", new int[articles.getTotalPages()]);
         model.addAttribute("currentPage", page);
         return "articles";
