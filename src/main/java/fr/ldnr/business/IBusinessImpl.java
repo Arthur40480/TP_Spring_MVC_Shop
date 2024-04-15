@@ -53,6 +53,15 @@ public class IBusinessImpl implements IBusiness {
         }
     }
 
+    public void removeToCart(Long articleId) {
+        Article articleToRemove = cart.get(articleId);
+        if(articleToRemove.getQuantity() > 1) {
+            articleToRemove.setQuantity(articleToRemove.getQuantity() - 1);
+        }else {
+            cart.remove(articleId);
+        }
+    }
+
     /**
      * Récupère tous les articles
      * @return Liste contenant tous les articles

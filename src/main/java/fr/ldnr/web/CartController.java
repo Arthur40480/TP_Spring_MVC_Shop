@@ -31,4 +31,13 @@ public class CartController {
         business.addToCart(articleId);
         return "redirect:/index";
     }
+
+    @GetMapping("/removeToCart")
+    public String removeToCart(Model model, Long articleId) {
+        HashMap<Long, Article> cart = business.displayCart();
+        model.addAttribute("listArticle", cart);
+
+        business.removeToCart(articleId);
+        return "cart";
+    }
 }

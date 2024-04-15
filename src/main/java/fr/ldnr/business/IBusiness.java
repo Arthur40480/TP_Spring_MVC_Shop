@@ -24,4 +24,5 @@ public interface IBusiness {
 
     //CART
     public void addToCart(Long articleId);
+    public void removeToCart(Long articleId);
 }
