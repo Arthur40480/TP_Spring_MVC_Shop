@@ -1,12 +1,8 @@
 package fr.ldnr.web;
 
-
 import fr.ldnr.business.IBusinessImpl;
-import fr.ldnr.dao.ArticleRepository;
 import fr.ldnr.entities.Article;
-import fr.ldnr.dao.CategoryRepository;
 import fr.ldnr.entities.Category;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

@@ -22,7 +22,7 @@ public class Category implements Serializable {
     @Size(max = 50)
     private String description;
 
-    @OneToMany(mappedBy = "category")
+    @ToString.Exclude @OneToMany(mappedBy = "category")
     private Collection<Article> articles;
 
     public Category(String name , String description) {

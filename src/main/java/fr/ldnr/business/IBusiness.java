@@ -5,6 +5,7 @@ import fr.ldnr.entities.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,7 @@ public interface IBusiness {
 
     // CATEGORIES
     public List<Category> findAllCategories();
+
+    //CART
+    public void addToCart(Long articleId);
 }

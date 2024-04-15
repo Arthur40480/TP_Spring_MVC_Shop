@@ -9,15 +9,49 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class IBusinessImpl implements IBusiness {
+    public HashMap<Long, Article> cart;
     @Autowired
     ArticleRepository articleRepository;
     @Autowired
     CategoryRepository categoryRepository;
+
+
+    public IBusinessImpl() {
+        this.cart = new HashMap<Long, Article>();
+    }
+
+    /**
+     * Retourne le panier
+     * @return HashMap qui est le panier
+     */
+    public HashMap<Long, Article> displayCart() {
+        return this.cart;
+    }
+
+    /**
+     * Ajout d'un article au panier
+     * @param articleId Article à ajouter
+     */
+    public void addToCart(Long articleId) {
+        Article articleToAdd = cart.get(articleId);
+        if (articleToAdd != null) {
+            System.out.println("Article déja présent dans le panier");
+            articleToAdd.setQuantity(articleToAdd.getQuantity() + 1);
+        } else {
+            Optional<Article> optionalToAdd = articleRepository.findById(articleId);
+            if (optionalToAdd.isPresent()) {
+                Article article = optionalToAdd.get();
+                cart.put(articleId, article);
+            }
+        }
+    }
 
     /**
      * Récupère tous les articles

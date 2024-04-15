@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://thymeLeaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate = "layout" lang="fr">
+    <head>
+        <meta charset="ISO-8859-1">
+        <title>Insert title here</title>
+        <link rel = "stylesheet" href ="../static/css/bootstrap.min.css" th:href = "@{css/bootstrap.min.css}">
+    </head>
+    <body>
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Panier</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th>Id</th> <th>Brand</th> <th>Description</th> <th>Price</th> <th>Category</th> <th>Quantity</th>
+                        </tr>
+                        <tr th:each="a:${listArticle.entrySet()}">
+                            <td th:text="${a.value.id}"></td>
+                            <td th:text="${a.value.brand}"></td>
+                            <td th:text="${a.value.description}"></td>
+                            <td th:text="${a.value.price}"></td>
+                            <td th:text="${a.value.category.name}"></td>
+                            <td th:text="${a.value.quantity}"></td>
+                            <td>
+                                <a class="btn btn-success" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-x" viewBox="0 0 16 16">
+                                        <path d="M7.354 5.646a.5.5 0 1 0-.708.708L7.793 7.5 6.646 8.646a.5.5 0 1 0 .708.708L8.5 8.207l1.146 1.147a.5.5 0 0 0 .708-.708L9.207 7.5l1.147-1.146a.5.5 0 0 0-.708-.708L8.5 6.793z"/>
+                                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                                    </svg> RemoveToCart</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <div><p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-x" viewBox="0 0 16 16">
+                        <path d="M7.354 5.646a.5.5 0 1 0-.708.708L7.793 7.5 6.646 8.646a.5.5 0 1 0 .708.708L8.5 8.207l1.146 1.147a.5.5 0 0 0 .708-.708L9.207 7.5l1.147-1.146a.5.5 0 0 0-.708-.708L8.5 6.793z"/>
+                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                    </svg> Total: 0?</p></div>
+                    <a class="btn btn-primary">Valider la commande</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

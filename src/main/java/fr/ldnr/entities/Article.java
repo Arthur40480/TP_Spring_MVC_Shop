@@ -26,6 +26,7 @@ public class Article implements Serializable {
 	private double price;
 	@ManyToOne
 	private Category category;
+	private int quantity = 1;
 	
 	public Article(String brand, String description, double price) {
 		this.brand = brand;

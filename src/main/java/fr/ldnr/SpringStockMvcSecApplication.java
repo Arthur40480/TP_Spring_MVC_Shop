@@ -19,7 +19,6 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringStockMvcSecApplication.class, args);
 	}
