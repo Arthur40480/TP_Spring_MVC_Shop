@@ -9,10 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class IBusinessImpl implements IBusiness {
@@ -60,6 +57,12 @@ public class IBusinessImpl implements IBusiness {
         }else {
             cart.remove(articleId);
         }
+    }
+
+    public double getTotal() {
+        final double[] total = {0};
+        cart.values().forEach((a) -> total[0] += a.getPrice()* a.getQuantity());
+        return total[0];
     }
 
     /**

@@ -22,6 +22,8 @@ public class CartController {
     @GetMapping("/cart")
     public String cart(Model model) {
         HashMap<Long, Article> cart = business.displayCart();
+        double total = business.getTotal();
+        model.addAttribute("total", total);
         model.addAttribute("listArticle", cart);
         return "cart";
     }
@@ -34,10 +36,11 @@ public class CartController {
 
     @GetMapping("/removeToCart")
     public String removeToCart(Model model, Long articleId) {
-        HashMap<Long, Article> cart = business.displayCart();
-        model.addAttribute("listArticle", cart);
-
         business.removeToCart(articleId);
+        HashMap<Long, Article> cart = business.displayCart();
+        double total = business.getTotal();
+        model.addAttribute("total", total);
+        model.addAttribute("listArticle", cart);
         return "cart";
     }
 }
