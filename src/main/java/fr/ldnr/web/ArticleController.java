@@ -65,22 +65,16 @@ public class ArticleController {
     @PostMapping("/update")
     public String update(Long id, @Valid Article articleToUpdate, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            System.out.println("Erreur !");
             return "updateArticle";
         }else {
-            Optional<Article> optionalArticleFromDB = business.findArticleById(id);
-            Optional<Category> optionalCategory= business.findCategoryById(articleToUpdate.getCategory().getId());
-            optionalCategory.ifPresent(System.out::println);
-            if(optionalArticleFromDB.isPresent()) {
-                Article articleFromDB = optionalArticleFromDB.get();
-                articleFromDB.setId(articleFromDB.getId());
-                articleFromDB.setBrand(articleToUpdate.getBrand());
-                articleFromDB.setDescription(articleToUpdate.getDescription());
-                articleFromDB.setPrice(articleToUpdate.getPrice());
-                articleFromDB.setCategory(articleToUpdate.getCategory());
-                System.out.println("Catégorie séléctionner:" + articleToUpdate.getCategory());
-                business.createArticle(articleFromDB);
-            }
+            articleToUpdate.setBrand(articleToUpdate.getBrand());
+            articleToUpdate.setDescription(articleToUpdate.getDescription());
+            articleToUpdate.setPrice(articleToUpdate.getPrice());
+            articleToUpdate.setCategory(articleToUpdate.getCategory());
+            System.out.println("nouveau prix:" + articleToUpdate.getPrice());
+            business.createArticle(articleToUpdate);
+            System.out.println("nouvelle catégorie:" + articleToUpdate.getCategory());
+            System.out.println("nouvel article:" + articleToUpdate);
             return "redirect:/index";
         }
     }
