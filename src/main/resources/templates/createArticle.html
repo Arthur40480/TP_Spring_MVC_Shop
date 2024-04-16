@@ -28,6 +28,12 @@
                                 <input class="form-control" type="text" name="price" th:value="${article.price}">
                                 <span th:errors="${article.price}"></span>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label">Category:</label>
+                                <select class="form-control" name="category">
+                                    <option th:each="category : ${listCategories}" th:value="${category.id}" th:text="${category.name}"></option>
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>
                     </div>

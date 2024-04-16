@@ -75,6 +75,8 @@ public class ArticleController {
 
     @GetMapping("/article")
     public String article(Model model) {
+        List<Category> categories = business.findAllCategories();
+        model.addAttribute("listCategories", categories);
         model.addAttribute("article", new Article());
         return "createArticle";
     }
