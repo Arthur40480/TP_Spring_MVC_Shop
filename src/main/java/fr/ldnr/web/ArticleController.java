@@ -52,26 +52,33 @@ public class ArticleController {
 
     @GetMapping("/updateForm")
     public String updateForm(Model model, @RequestParam(name = "idArticle") Long id) {
+        List<Category> categories = business.findAllCategories();
         Optional<Article> optionalArticleToUpdate = business.findArticleById(id);
         if(optionalArticleToUpdate.isPresent()) {
             Article articleToUpdate = optionalArticleToUpdate.get();
             model.addAttribute("article", articleToUpdate);
         }
+        model.addAttribute("listCategories", categories);
         return "updateArticle";
     }
 
     @PostMapping("/update")
     public String update(Long id, @Valid Article articleToUpdate, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
+            System.out.println("Erreur !");
             return "updateArticle";
         }else {
             Optional<Article> optionalArticleFromDB = business.findArticleById(id);
+            Optional<Category> optionalCategory= business.findCategoryById(articleToUpdate.getCategory().getId());
+            optionalCategory.ifPresent(System.out::println);
             if(optionalArticleFromDB.isPresent()) {
                 Article articleFromDB = optionalArticleFromDB.get();
                 articleFromDB.setId(articleFromDB.getId());
                 articleFromDB.setBrand(articleToUpdate.getBrand());
                 articleFromDB.setDescription(articleToUpdate.getDescription());
                 articleFromDB.setPrice(articleToUpdate.getPrice());
+                articleFromDB.setCategory(articleToUpdate.getCategory());
+                System.out.println("Catégorie séléctionner:" + articleToUpdate.getCategory());
                 business.createArticle(articleFromDB);
             }
             return "redirect:/index";

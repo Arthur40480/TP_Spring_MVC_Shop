@@ -133,6 +133,9 @@ public class IBusinessImpl implements IBusiness {
         }
     }
 
+    public Optional<Category> findCategoryById(Long id) {
+        return categoryRepository.findById(id);
+    }
     /**
      * Récupère toute les catégories
      * @return List des catégories
