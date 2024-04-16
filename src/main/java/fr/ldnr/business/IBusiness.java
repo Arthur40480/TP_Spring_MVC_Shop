@@ -16,6 +16,7 @@ public interface IBusiness {
     public Page<Article> findArticleByDescriptionContains(String keyword, Pageable pageable);
     public Page<Article> findArticlesByCategoryId(Long categoryId, Pageable pageable);
     public boolean createArticle(Article article);
+    public void updateArticle(Article article);
     public boolean deleteArticleById(Long id);
 
     // CATEGORIES

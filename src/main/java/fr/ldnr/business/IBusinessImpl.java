@@ -50,6 +50,10 @@ public class IBusinessImpl implements IBusiness {
         }
     }
 
+    /**
+     * Retire un article du panier
+     * @param articleId id de l'article à retirer
+     */
     public void removeToCart(Long articleId) {
         Article articleToRemove = cart.get(articleId);
         if(articleToRemove.getQuantity() > 1) {
@@ -59,6 +63,10 @@ public class IBusinessImpl implements IBusiness {
         }
     }
 
+    /**
+     * Récupère le total du panier
+     * @return double total du panier
+     */
     public double getTotal() {
         final double[] total = {0};
         cart.values().forEach((a) -> total[0] += a.getPrice()* a.getQuantity());
@@ -119,6 +127,22 @@ public class IBusinessImpl implements IBusiness {
     }
 
     /**
+     * Mise à jour d'un article
+     * @param article à mettre à jour
+     */
+    public void updateArticle(Article article) {
+        Optional<Article> optionalArticle = articleRepository.findById(article.getId());
+        if(optionalArticle.isPresent()) {
+          Article existingArticle = optionalArticle.get();
+          existingArticle.setBrand(article.getBrand());
+          existingArticle.setDescription(article.getDescription());
+          existingArticle.setPrice(article.getPrice());
+          existingArticle.setCategory(article.getCategory());
+          articleRepository.save(existingArticle);
+        }
+    }
+
+    /**
      * Supprime un article par son id
      * @param id id de l'article à supprimer
      * @return true si l'article à été supprimé avec succès, false sinon
@@ -140,6 +164,7 @@ public class IBusinessImpl implements IBusiness {
      * Récupère toute les catégories
      * @return List des catégories
      */
+
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }

@@ -41,4 +41,11 @@ public class Article implements Serializable {
 		this.category = cat;
 	}
 
+	public Article(Long id, String brand, String description, double price, Category category) {
+		this.id = id;
+		this.brand = brand;
+		this.description = description;
+		this.price = price;
+		this.category = category;
+	}
 }

@@ -67,14 +67,8 @@ public class ArticleController {
         if(bindingResult.hasErrors()) {
             return "updateArticle";
         }else {
-            articleToUpdate.setBrand(articleToUpdate.getBrand());
-            articleToUpdate.setDescription(articleToUpdate.getDescription());
-            articleToUpdate.setPrice(articleToUpdate.getPrice());
-            articleToUpdate.setCategory(articleToUpdate.getCategory());
-            System.out.println("nouveau prix:" + articleToUpdate.getPrice());
-            business.createArticle(articleToUpdate);
-            System.out.println("nouvelle catégorie:" + articleToUpdate.getCategory());
             System.out.println("nouvel article:" + articleToUpdate);
+            business.updateArticle(articleToUpdate);
             return "redirect:/index";
         }
     }
