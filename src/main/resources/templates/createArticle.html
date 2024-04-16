@@ -16,23 +16,25 @@
                             <div class="form-group">
                                 <label class="control-label"> Brand :</label>
                                 <input class="form-control" type="text" name="brand" th:value="${article.brand}">
-                                <span th:errors="${article.brand}"></span>
+                                <span th:errors="${article.brand}" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Description :</label>
                                 <input class="form-control" type="text" name="description" th:value="${article.description}">
-                                <span th:errors="${article.description}"></span>
+                                <span th:errors="${article.description}" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label class="control-label"> Price :</label>
                                 <input class="form-control" type="text" name="price" th:value="${article.price}">
-                                <span th:errors="${article.price}"></span>
+                                <span th:errors="${article.price}" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Category:</label>
-                                <select class="form-control" name="category">
-                                    <option th:each="category : ${listCategories}" th:value="${category.id}" th:text="${category.name}"></option>
-                                </select>
+                                <label>
+                                    <select class="form-control" name="category">
+                                        <option th:each="category : ${listCategories}" th:value="${category.id}" th:text="${category.name}"></option>
+                                    </select>
+                                </label>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>

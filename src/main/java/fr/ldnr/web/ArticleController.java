@@ -63,7 +63,9 @@ public class ArticleController {
     }
 
     @PostMapping("/update")
-    public String update(Long id, @Valid Article articleToUpdate, BindingResult bindingResult) {
+    public String update(Model model, Long id, @Valid Article articleToUpdate, BindingResult bindingResult) {
+        List<Category> categories = business.findAllCategories();
+        model.addAttribute("listCategories", categories);
         if(bindingResult.hasErrors()) {
             return "updateArticle";
         }else {
@@ -83,7 +85,9 @@ public class ArticleController {
 
     @PostMapping("/save")
     public String save(Model model, @Valid Article article, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) return "article";
+        List<Category> categories = business.findAllCategories();
+        model.addAttribute("listCategories", categories);
+        if(bindingResult.hasErrors()) return "createArticle";
         business.createArticle(article);
         return "redirect:/index";
     }
