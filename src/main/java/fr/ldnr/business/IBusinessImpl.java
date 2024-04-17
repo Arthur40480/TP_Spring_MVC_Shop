@@ -4,6 +4,7 @@ import fr.ldnr.dao.ArticleRepository;
 import fr.ldnr.dao.CategoryRepository;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
+import fr.ldnr.entities.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -167,5 +168,10 @@ public class IBusinessImpl implements IBusiness {
 
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    public Customer createCustomer( Customer customer)
+    {
+        return customer;
     }
 }

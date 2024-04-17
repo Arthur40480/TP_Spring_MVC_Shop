@@ -2,6 +2,7 @@ package fr.ldnr.business;
 
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
+import fr.ldnr.entities.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,4 +28,5 @@ public interface IBusiness {
     public void addToCart(Long articleId);
     public void removeToCart(Long articleId);
     public double getTotal();
+    public Customer createCustomer(Customer customer);
 }
