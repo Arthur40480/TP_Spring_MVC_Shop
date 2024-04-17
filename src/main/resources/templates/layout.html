@@ -26,7 +26,7 @@
                         </a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right flex-row-reverse">
                     <li th:if="${isUserAuthenticated}">
                         <a th:href="@{/logout}">
                             <button class="btn btn-outline-primary">
@@ -37,6 +37,11 @@
                                 logout
                             </button>
                         </a>
+                    </li>
+                    <li th:if="${isUserAuthenticated}">
+                        <p th:text="${#authentication.name} ? 'Bonjour ' + ${#authentication.name} : ''"></p>
+                        <p sec:authorize="hasRole('ROLE_ADMIN')" class="font-weight-bold">(ADMIN)</p>
+                        <p sec:authorize="hasRole('ROLE_USER')" class="font-weight-bold">(USER)</p>
                     </li>
                     <li th:if="${!isUserAuthenticated}">
                         <a th:href="@{/login}">

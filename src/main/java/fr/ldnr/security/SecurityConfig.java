@@ -37,8 +37,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("SELECT username AS principal, role AS role FROM T_Users_Roles where username=?")
                 .rolePrefix("ROLE_") //Ajout d'un prefix, par exemple si le role est ADMIN => ROLE_ADMIN
                 .passwordEncoder(passwordEncoder());
-
-
     }
 
     @Override
