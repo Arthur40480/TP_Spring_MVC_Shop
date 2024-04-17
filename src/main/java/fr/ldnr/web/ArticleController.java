@@ -92,9 +92,13 @@ public class ArticleController {
         return "redirect:/index";
     }
 
-    @GetMapping("/loggin")
-    public String loggin(){
-        return "loggin";
+    @GetMapping("/")
+    public String log(){
+        return "redirect:/index";
     }
 
+    @GetMapping("/403")
+    public String error() {
+        return "403";
+    }
 }
