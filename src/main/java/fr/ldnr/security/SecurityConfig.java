@@ -47,8 +47,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
             .permitAll()
                 .and()
         // Attribution des accès aux pages en fonction des rôles
-            .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder" , "/toOrder").hasRole("ADMIN")
-            .antMatchers("/validateOrder" , "/toOrder").hasRole("USER")
+            .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("ADMIN")
+            .antMatchers("/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("USER")
                 .and()
             .exceptionHandling().accessDeniedPage("/403"); // Au cas ou un user tente d'accéder à une page non authorisée
     }

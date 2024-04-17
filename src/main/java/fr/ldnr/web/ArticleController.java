@@ -3,6 +3,7 @@ package fr.ldnr.web;
 import fr.ldnr.business.IBusinessImpl;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
+import fr.ldnr.entities.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -102,8 +103,5 @@ public class ArticleController {
         return "403";
     }
 
-    @GetMapping("/toOrder")
-    public String toOrder() {
-        return "validateOrder";
-    }
+
 }
