@@ -101,4 +101,9 @@ public class ArticleController {
     public String error() {
         return "403";
     }
+
+    @GetMapping("/toOrder")
+    public String toOrder() {
+        return "validateOrder";
+    }
 }

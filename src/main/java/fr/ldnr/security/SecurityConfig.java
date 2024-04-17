@@ -43,11 +43,14 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin();
+        http.formLogin()
+            .permitAll()
+                .and()
         // Attribution des accès aux pages en fonction des rôles
-        http.authorizeRequests().antMatchers("/index", "/delete", "/save", "/updateForm", "/article", "/cart").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/index", "/cart").hasRole("USER");
-        http.exceptionHandling().accessDeniedPage("/403"); // Au cas ou un user tente d'accéder à une page non authorisée
+            .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder" , "/toOrder").hasRole("ADMIN")
+            .antMatchers("/validateOrder" , "/toOrder").hasRole("USER")
+                .and()
+            .exceptionHandling().accessDeniedPage("/403"); // Au cas ou un user tente d'accéder à une page non authorisée
     }
 
     @Bean
