@@ -37,20 +37,19 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("SELECT username AS principal, role AS role FROM T_Users_Roles where username=?")
                 .rolePrefix("ROLE_") //Ajout d'un prefix, par exemple si le role est ADMIN => ROLE_ADMIN
                 .passwordEncoder(passwordEncoder());
-
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-            .permitAll()
+                .permitAll()
                 .and()
-        // Attribution des accès aux pages en fonction des rôles
-            .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder" , "/toOrder").hasRole("ADMIN")
-            .antMatchers("/validateOrder" , "/toOrder").hasRole("USER")
+                // Attribution des accès aux pages en fonction des rôles
+                .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder" , "/toOrder").hasRole("ADMIN")
+                .antMatchers("/validateOrder" , "/toOrder").hasRole("USER")
                 .and()
-            .exceptionHandling().accessDeniedPage("/403"); // Au cas ou un user tente d'accéder à une page non authorisée
+                .exceptionHandling().accessDeniedPage("/403"); // Au cas ou un user tente d'accéder à une page non authorisée
+
     }
 
     @Bean

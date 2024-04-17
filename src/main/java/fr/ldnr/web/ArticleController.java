@@ -6,6 +6,7 @@ import fr.ldnr.entities.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,9 @@ public class ArticleController {
 
     //@RequestMapping(value="/index", method=RequestMethod.GET)
     @GetMapping("/index")
-    public String index(Model model, Long id ,@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw) {
+    public String index(Model model, Long id , @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw, Authentication authentication) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         List<Category> categories = business.findAllCategories();
         Page<Article> articles;
         if(id == null) {
