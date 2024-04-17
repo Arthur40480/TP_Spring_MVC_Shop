@@ -6,6 +6,7 @@ import fr.ldnr.entities.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,5 +29,11 @@ public interface IBusiness {
     public void addToCart(Long articleId);
     public void removeToCart(Long articleId);
     public double getTotal();
+
     public Customer createCustomer(Customer customer);
+
+
+    //USER
+    public boolean isUserAuthenticated();
+    public HashMap<String, Object> getUserInfos();
 }

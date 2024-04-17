@@ -8,6 +8,10 @@ import fr.ldnr.entities.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,6 +29,28 @@ public class IBusinessImpl implements IBusiness {
         this.cart = new HashMap<Long, Article>();
     }
 
+    public HashMap<String, Object> getUserInfos() {
+        if(!isUserAuthenticated()){
+            return null;
+        }else {
+            HashMap<String, Object> userInfos = new HashMap<String, Object>();
+            String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+            List<GrantedAuthority> userRoles = new ArrayList<>(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+            userInfos.put("userName", userName);
+            userInfos.put("userRoles", userRoles);
+            return userInfos;
+        }
+    }
+
+    /**
+     * Vérifie si un utilisateur est connecter
+     * @return true ou false si aucun utilisateur n'est connecter
+     */
+    public boolean isUserAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken);
+    }
     /**
      * Retourne le panier
      * @return HashMap qui est le panier
