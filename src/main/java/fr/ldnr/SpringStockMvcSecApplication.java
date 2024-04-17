@@ -10,6 +10,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.ldnr.dao.ArticleRepository;
 import fr.ldnr.entities.Article;
 
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+
 @SpringBootApplication
 public class SpringStockMvcSecApplication implements CommandLineRunner {
 	
@@ -106,5 +112,15 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 		articleRepository.save(new Article("Alcatel", 800));
 		articleRepository.save(new Article("Xiaomi", 80));*/
 
+	}
+
+	//pour page 404
+	@Component
+	public class CustomContainer implements WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> {
+
+		@Override
+		public void customize(ConfigurableServletWebServerFactory factory) {
+			factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
+		}
 	}
 }
