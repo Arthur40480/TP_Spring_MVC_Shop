@@ -97,4 +97,16 @@ public class ArticleController {
         return "loggin";
     }
 
+    @GetMapping("/403")
+    public String error()
+    {
+        return "403";
+    }
+
+    @GetMapping("/")
+    public String log()
+    {
+        return "redirect:/index";
+    }
+
 }
