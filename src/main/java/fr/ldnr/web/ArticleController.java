@@ -31,9 +31,8 @@ public class ArticleController {
     //@RequestMapping(value="/index", method=RequestMethod.GET)
     @GetMapping("/index")
     public String index(Model model, Long id , @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw, Authentication authentication) {
-        if(business.getUserInfos() != null) {
-            System.out.println(business.getUserInfos());
-        }
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         List<Category> categories = business.findAllCategories();
         Page<Article> articles;
         if(id == null) {
