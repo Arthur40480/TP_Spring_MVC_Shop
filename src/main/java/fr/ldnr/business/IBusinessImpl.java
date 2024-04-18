@@ -6,6 +6,7 @@ import fr.ldnr.dao.CustomerRepository;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
 import fr.ldnr.entities.Customer;
+import fr.ldnr.exceptions.ArticleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +21,6 @@ import java.util.*;
 @Service
 public class IBusinessImpl implements IBusiness {
     public HashMap<Long, Article> cart;
-    public Customer customer;
 
     @Autowired
     ArticleRepository articleRepository;
@@ -31,20 +31,6 @@ public class IBusinessImpl implements IBusiness {
 
     public IBusinessImpl() {
         this.cart = new HashMap<Long, Article>();
-        this.customer = new Customer();
-    }
-
-    public HashMap<String, Object> getUserInfos() {
-        if(!isUserAuthenticated()){
-            return null;
-        }else {
-            HashMap<String, Object> userInfos = new HashMap<String, Object>();
-            String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-            List<GrantedAuthority> userRoles = new ArrayList<>(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-            userInfos.put("userName", userName);
-            userInfos.put("userRoles", userRoles);
-            return userInfos;
-        }
     }
 
     /**
@@ -56,16 +42,13 @@ public class IBusinessImpl implements IBusiness {
         return authentication != null && authentication.isAuthenticated()
                 && !(authentication instanceof AnonymousAuthenticationToken);
     }
+
     /**
      * Retourne le panier
      * @return HashMap qui est le panier
      */
     public HashMap<Long, Article> displayCart() {
         return this.cart;
-    }
-
-    public Customer displayCustomer() {
-        return this.customer;
     }
 
     /**
@@ -151,15 +134,14 @@ public class IBusinessImpl implements IBusiness {
      * @param newArticle Article à créer
      * @return true si l'article à été crée avec succès, false sinon
      */
-    public boolean createArticle(Article newArticle) {
+    public void createArticle(Article newArticle) throws ArticleException {
         List<Article> articleList = articleRepository.findAll();
         for (Article article : articleList) {
             if (newArticle.getDescription().equals(article.getDescription()) && newArticle.getBrand().equals(article.getBrand())) {
-                return false;
+                throw new ArticleException("Impossible de créer deux fois le même article");
             }
         }
         articleRepository.save(newArticle);
-        return true;
     }
 
     /**

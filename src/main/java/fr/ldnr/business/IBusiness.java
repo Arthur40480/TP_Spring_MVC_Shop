@@ -3,6 +3,7 @@ package fr.ldnr.business;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
 import fr.ldnr.entities.Customer;
+import fr.ldnr.exceptions.ArticleException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,7 +18,7 @@ public interface IBusiness {
     public Optional<Article> findArticleById(Long id);
     public Page<Article> findArticleByDescriptionContains(String keyword, Pageable pageable);
     public Page<Article> findArticlesByCategoryId(Long categoryId, Pageable pageable);
-    public boolean createArticle(Article article);
+    public void createArticle(Article article) throws ArticleException;
     public void updateArticle(Article article);
     public boolean deleteArticleById(Long id);
 
@@ -32,7 +33,6 @@ public interface IBusiness {
 
     //USER
     public boolean isUserAuthenticated();
-    public HashMap<String, Object> getUserInfos();
 
     //CUSTOMER
     public void createCustomer(Customer customer);

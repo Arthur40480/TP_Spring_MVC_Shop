@@ -4,6 +4,7 @@ import fr.ldnr.business.IBusinessImpl;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
 import fr.ldnr.entities.Customer;
+import fr.ldnr.exceptions.ArticleException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class ArticleController {
 
@@ -81,18 +84,34 @@ public class ArticleController {
 
     @GetMapping("/article")
     public String article(Model model) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
         List<Category> categories = business.findAllCategories();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         model.addAttribute("listCategories", categories);
         model.addAttribute("article", new Article());
         return "createArticle";
     }
 
     @PostMapping("/save")
-    public String save(Model model, @Valid Article article, BindingResult bindingResult) {
+    public String save(Model model, @Valid Article article, BindingResult bindingResult) throws ArticleException {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
         List<Category> categories = business.findAllCategories();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         model.addAttribute("listCategories", categories);
-        if(bindingResult.hasErrors()) return "createArticle";
-        business.createArticle(article);
+
+        if(bindingResult.hasErrors()) {
+            log.error("Erreur de validation du formulaire: {}", bindingResult.getAllErrors());
+            return "createArticle";
+        }
+
+        try {
+            business.createArticle(article);
+        } catch (ArticleException e) {
+            log.error("Erreur lors de la création de l'article: {}", e.getMessage(), e);
+            model.addAttribute("errorMessage", e.getMessage());
+            return "createArticle";
+        }
+        log.info("Article créé avec succès: {}", article);
         return "redirect:/index";
     }
 
