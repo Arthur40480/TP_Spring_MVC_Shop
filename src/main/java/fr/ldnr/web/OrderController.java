@@ -21,10 +21,11 @@ public class OrderController
     }
 
     @GetMapping("/validateOrder")
-    public String validate(Model model)
-    {
+    public String validate(Model model) {
+        Customer customer = (Customer) model.getAttribute("customer");
         HashMap<Long , Article> cart = business.displayCart();
-        model.addAttribute("customer" , business.displayCustomer());
+
+        model.addAttribute("customer" , customer);
         model.addAttribute("listArticle", cart);
         return "validateOrder";
     }
