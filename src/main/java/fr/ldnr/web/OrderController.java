@@ -28,4 +28,25 @@ public class OrderController
         model.addAttribute("listArticle", cart);
         return "validateOrder";
     }
+
+    @GetMapping("/annulationOrder")
+    public String annulationOrder()
+    {
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/confirmationOrder")
+    public String confirmationOrder(Model model)
+    {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
+        return "confirmationOrder";
+    }
+
+    @GetMapping("/returnIndex")
+    public String returnIndex()
+    {
+        return "redirect:/index";
+    }
+
 }

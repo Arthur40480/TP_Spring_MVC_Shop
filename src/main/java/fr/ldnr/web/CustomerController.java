@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -37,6 +38,8 @@ public class CustomerController
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         business.customer = new Customer(customer.getName(), customer.getFirstName(),
                 customer.getAddress(), customer.getEmail(), customer.getPhone());
+        HashMap<Long , Article> cart = business.displayCart();
+        model.addAttribute("listArticle", cart);
         return "validateOrder";
     }
 }

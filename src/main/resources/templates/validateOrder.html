@@ -8,45 +8,48 @@
     <link rel = "stylesheet" href ="../static/css/bootstrap.min.css" th:href = "@{css/bootstrap.min.css}">
 </head>
 <body>
-<div layout:fragment="content">
-    <div class = "panel panel-success">
-        <div class = "panel-heading">information client</div>
-        <div class = "panel-body">
-            <br>
-            <table class = "table" >
-                <tr>
-                    <th>Nom</th><th>Prenom</th><th>Adress</th><th>email</th><th>Phone</th>
-                </tr>
-                <tr th:each="custom:${customer}">
-                    <td th:text="${custom.name}">?</td>
-                    <td th:text="${custom.firstName}"></td>
-                    <td th:text="${custom.address}"></td>
-                    <td th:text="${custom.email}"></td>
-                    <td th:text="${custom.phone}"></td>
-                </tr>
-            </table>
+    <div layout:fragment="content">
+        <div class = "panel panel-success">
+            <div class = "panel-heading">information client</div>
+            <div class = "panel-body">
+                <br>
+                <table class = "table" >
+                    <tr>
+                        <th>Nom</th><th>Prenom</th><th>Adress</th><th>email</th><th>Phone</th>
+                    </tr>
+                    <tr th:each="custom:${customer}">
+                        <td th:text="${custom.name}">?</td>
+                        <td th:text="${custom.firstName}"></td>
+                        <td th:text="${custom.address}"></td>
+                        <td th:text="${custom.email}"></td>
+                        <td th:text="${custom.phone}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class = "panel panel-primary">
+            <div class = "panel-heading">information order panier </div>
+            <div class = "panel-body">
+                <br>
+                <table class = "table" >
+                    <tr>
+                        <th>Id</th> <th>Brand</th> <th>Description</th> <th>Price</th> <th>Category</th>
+                    </tr>
+                    <tr th:each="a : ${listArticle.entrySet()}">
+                        <td th:text="${a.value.id}"></td>
+                        <td th:text="${a.value.brand}"></td>
+                        <td th:text="${a.value.description}"></td>
+                        <td th:text="${a.value.price}"></td>
+                        <td th:text="${a.value.category.name}"></td>
+                        <td th:text="${a.value.quantity}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-success" th:href="@{/confirmationOrder}">Valider la commande</a>
+            <a class="btn btn-danger" th:href="@{/annulationOrder}">Annuler la commande</a>
         </div>
     </div>
-    <div class = "panel panel-primary">
-        <div class = "panel-heading">information order panier </div>
-        <div class = "panel-body">
-            <br>
-            <table class = "table" >
-                <tr>
-                    <th>Id</th> <th>Brand</th> <th>Description</th> <th>Price</th> <th>Category</th>
-                </tr>
-                <tr th:each="a:${listArticle.entrySet()}">
-                    <td th:text="${a.value.id}"></td>
-                    <td th:text="${a.value.brand}"></td>
-                    <td th:text="${a.value.description}"></td>
-                    <td th:text="${a.value.price}"></td>
-                    <td th:text="${a.value.category.name}"></td>
-                    <td th:text="${a.value.quantity}"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
-</div>
 </body>
 </html>
