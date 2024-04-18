@@ -23,8 +23,7 @@ public class CustomerController
     }
 
     @GetMapping("/CustomerForm")
-    public String toOrder( Model model)
-    {
+    public String toOrder( Model model) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         model.addAttribute("customer", new Customer());
@@ -33,12 +32,14 @@ public class CustomerController
 
     @PostMapping("/saveCustomer")
     public String save(Model model, @Valid Customer customer , BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) return "CustomerForm";
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
-        business.customer = new Customer(customer.getName(), customer.getFirstName(),
-                customer.getAddress(), customer.getEmail(), customer.getPhone());
+
+        if(bindingResult.hasErrors()) return "CustomerForm";
+
+        business.createCustomer(customer);
         HashMap<Long , Article> cart = business.displayCart();
+        model.addAttribute("customer", customer);
         model.addAttribute("listArticle", cart);
         return "validateOrder";
     }

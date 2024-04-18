@@ -2,6 +2,7 @@ package fr.ldnr.business;
 
 import fr.ldnr.dao.ArticleRepository;
 import fr.ldnr.dao.CategoryRepository;
+import fr.ldnr.dao.CustomerRepository;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
 import fr.ldnr.entities.Customer;
@@ -20,11 +21,13 @@ import java.util.*;
 public class IBusinessImpl implements IBusiness {
     public HashMap<Long, Article> cart;
     public Customer customer;
+
     @Autowired
     ArticleRepository articleRepository;
     @Autowired
     CategoryRepository categoryRepository;
-
+    @Autowired
+    CustomerRepository customerRepository;
 
     public IBusinessImpl() {
         this.cart = new HashMap<Long, Article>();
@@ -190,20 +193,28 @@ public class IBusinessImpl implements IBusiness {
         }
     }
 
+    /**
+     * Récupère une catégorie par son identifiant
+     * @param id Identifiant de la catégorie à récupérer
+     * @return Optional -> Categorie sinon Null
+     */
     public Optional<Category> findCategoryById(Long id) {
         return categoryRepository.findById(id);
     }
+
     /**
      * Récupère toute les catégories
      * @return List des catégories
      */
-
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
 
-    public Customer createCustomer( Customer customer)
-    {
-        return customer;
+    /**
+     * Créer un nouveau customer
+     * @param customer customer à sauvegarder
+     */
+    public void createCustomer( Customer customer) {
+        customerRepository.save(customer);
     }
 }

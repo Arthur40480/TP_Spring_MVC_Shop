@@ -30,8 +30,10 @@ public interface IBusiness {
     public void removeToCart(Long articleId);
     public double getTotal();
 
-
     //USER
     public boolean isUserAuthenticated();
     public HashMap<String, Object> getUserInfos();
+
+    //CUSTOMER
+    public void createCustomer(Customer customer);
 }

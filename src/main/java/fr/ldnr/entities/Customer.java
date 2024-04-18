@@ -14,10 +14,9 @@ import java.io.Serializable;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class Customer implements Serializable
-{
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+public class Customer implements Serializable {
+
+    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @NotNull @Size(min=1,max=20)
     private String name;
@@ -25,16 +24,16 @@ public class Customer implements Serializable
     private String firstName;
     @NotNull @Size(min=1,max=100)
     private String address;
-    @NotNull @Email
+    @NotNull @NotEmpty @Email
     private String email;
-    @NotNull @Size(min =10 , max = 10)
-    private String phone;
+    @NotNull @Pattern(regexp="\\d{10}", message="Numéro de téléphone incorrect")
+    private String phoneNumber;
 
-    public Customer(String name , String firstName , String address , String email , String phone) {
+    public Customer(String name , String firstName , String address , String email , String phoneNumber) {
         this.name = name;
         this.firstName = firstName;
         this.address = address;
         this.email = email;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
     }
 }
