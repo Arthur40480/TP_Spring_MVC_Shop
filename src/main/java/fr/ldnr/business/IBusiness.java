@@ -3,6 +3,7 @@ package fr.ldnr.business;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
 import fr.ldnr.entities.Customer;
+import fr.ldnr.entities.Commande;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -36,4 +37,8 @@ public interface IBusiness {
 
     //CUSTOMER
     public void createCustomer(Customer customer);
+    public Optional<Customer> findCustomerById(Long customerId);
+
+    //ORDER
+    public void createOrder(Commande order);
 }

@@ -3,9 +3,11 @@ package fr.ldnr.business;
 import fr.ldnr.dao.ArticleRepository;
 import fr.ldnr.dao.CategoryRepository;
 import fr.ldnr.dao.CustomerRepository;
+import fr.ldnr.dao.OrderRepository;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
 import fr.ldnr.entities.Customer;
+import fr.ldnr.entities.Commande;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +22,6 @@ import java.util.*;
 @Service
 public class IBusinessImpl implements IBusiness {
     public HashMap<Long, Article> cart;
-    public Customer customer;
 
     @Autowired
     ArticleRepository articleRepository;
@@ -28,10 +29,11 @@ public class IBusinessImpl implements IBusiness {
     CategoryRepository categoryRepository;
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
     public IBusinessImpl() {
         this.cart = new HashMap<Long, Article>();
-        this.customer = new Customer();
     }
 
     public HashMap<String, Object> getUserInfos() {
@@ -62,10 +64,6 @@ public class IBusinessImpl implements IBusiness {
      */
     public HashMap<Long, Article> displayCart() {
         return this.cart;
-    }
-
-    public Customer displayCustomer() {
-        return this.customer;
     }
 
     /**
@@ -217,4 +215,11 @@ public class IBusinessImpl implements IBusiness {
     public void createCustomer( Customer customer) {
         customerRepository.save(customer);
     }
+
+    public Optional<Customer> findCustomerById(Long customerId ) { return customerRepository.findById(customerId); }
+    /**
+     * cree un nouveau order
+     * @param order order a sauvegarder
+     */
+    public void createOrder ( Commande order) { orderRepository.save(order); }
 }
