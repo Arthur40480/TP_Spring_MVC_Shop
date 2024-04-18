@@ -30,8 +30,6 @@ public interface IBusiness {
     public void removeToCart(Long articleId);
     public double getTotal();
 
-    public Customer createCustomer(Customer customer);
-
 
     //USER
     public boolean isUserAuthenticated();

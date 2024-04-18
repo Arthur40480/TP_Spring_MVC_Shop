@@ -2,10 +2,14 @@ package fr.ldnr.web;
 
 
 import fr.ldnr.business.IBusinessImpl;
+import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Customer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class OrderController
@@ -17,9 +21,11 @@ public class OrderController
     }
 
     @GetMapping("/validateOrder")
-    public String validate(Model mode , Customer customer)
+    public String validate(Model model)
     {
-        mode.addAttribute("customer" , business.createCustomer(customer));
-        return "redirect:/index";
+        HashMap<Long , Article> cart = business.displayCart();
+        model.addAttribute("customer" , business.displayCustomer());
+        model.addAttribute("listArticle", cart);
+        return "validateOrder";
     }
 }

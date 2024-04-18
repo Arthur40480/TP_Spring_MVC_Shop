@@ -21,6 +21,8 @@ public class CartController {
 
     @GetMapping("/cart")
     public String cart(Model model) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         HashMap<Long, Article> cart = business.displayCart();
         double total = business.getTotal();
         model.addAttribute("total", total);
@@ -36,6 +38,8 @@ public class CartController {
 
     @GetMapping("/removeToCart")
     public String removeToCart(Model model, Long articleId) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         business.removeToCart(articleId);
         HashMap<Long, Article> cart = business.displayCart();
         double total = business.getTotal();

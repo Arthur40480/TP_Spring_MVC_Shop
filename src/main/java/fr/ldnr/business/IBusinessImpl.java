@@ -19,6 +19,7 @@ import java.util.*;
 @Service
 public class IBusinessImpl implements IBusiness {
     public HashMap<Long, Article> cart;
+    public Customer customer;
     @Autowired
     ArticleRepository articleRepository;
     @Autowired
@@ -27,6 +28,7 @@ public class IBusinessImpl implements IBusiness {
 
     public IBusinessImpl() {
         this.cart = new HashMap<Long, Article>();
+        this.customer = new Customer();
     }
 
     public HashMap<String, Object> getUserInfos() {
@@ -57,6 +59,10 @@ public class IBusinessImpl implements IBusiness {
      */
     public HashMap<Long, Article> displayCart() {
         return this.cart;
+    }
+
+    public Customer displayCustomer() {
+        return this.customer;
     }
 
     /**
