@@ -3,7 +3,6 @@ package fr.ldnr.web;
 import fr.ldnr.business.IBusinessImpl;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
-import fr.ldnr.entities.Customer;
 import fr.ldnr.exceptions.ArticleException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ArticleController {
 
     private final IBusinessImpl business;
+    private static final String VALIDATION_ERROR_MSG = "Erreur de validation du formulaire: {}";
+    private static final String ARTICLE_LOAD_SUCCESS_MSG = "Chargement des articles réussi.";
 
     public ArticleController(IBusinessImpl business) {
         this.business = business;
@@ -40,9 +42,11 @@ public class ArticleController {
         if(id == null) {
             articles = business.findArticleByDescriptionContains(kw,(Pageable) PageRequest.of(page, 5));
             model.addAttribute("keyword", kw);
+            log.info(ARTICLE_LOAD_SUCCESS_MSG);
         }else {
             articles = business.findArticlesByCategoryId(id,(Pageable) PageRequest.of(page, 5));
             model.addAttribute("idCat", id);
+            log.info(ARTICLE_LOAD_SUCCESS_MSG);
         }
         model.addAttribute("listArticle", articles.getContent());
         model.addAttribute("listCategories", categories);
@@ -53,6 +57,8 @@ public class ArticleController {
 
     @GetMapping("/delete")
     public String delete(Long id, int page, String keyword) {
+        List<Category> categories = business.findAllCategories();
+        boolean isUserAuthenticated = business.isUserAuthenticated();
         business.deleteArticleById(id);
         return "redirect:/index?page=" + page + "&keyword=" + keyword;
     }
@@ -64,6 +70,7 @@ public class ArticleController {
         if(optionalArticleToUpdate.isPresent()) {
             Article articleToUpdate = optionalArticleToUpdate.get();
             model.addAttribute("article", articleToUpdate);
+            log.info(ARTICLE_LOAD_SUCCESS_MSG);
         }
         model.addAttribute("listCategories", categories);
         return "updateArticle";
@@ -73,11 +80,13 @@ public class ArticleController {
     public String update(Model model, Long id, @Valid Article articleToUpdate, BindingResult bindingResult) {
         List<Category> categories = business.findAllCategories();
         model.addAttribute("listCategories", categories);
+
         if(bindingResult.hasErrors()) {
+            log.error(VALIDATION_ERROR_MSG, bindingResult.getAllErrors());
             return "updateArticle";
         }else {
-            System.out.println("nouvel article:" + articleToUpdate);
             business.updateArticle(articleToUpdate);
+            log.info("Article modifier avec succès: {}", articleToUpdate);
             return "redirect:/index";
         }
     }
@@ -100,7 +109,7 @@ public class ArticleController {
         model.addAttribute("listCategories", categories);
 
         if(bindingResult.hasErrors()) {
-            log.error("Erreur de validation du formulaire: {}", bindingResult.getAllErrors());
+            log.error(VALIDATION_ERROR_MSG, bindingResult.getAllErrors());
             return "createArticle";
         }
 

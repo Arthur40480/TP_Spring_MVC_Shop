@@ -20,7 +20,7 @@ public interface IBusiness {
     public Page<Article> findArticlesByCategoryId(Long categoryId, Pageable pageable);
     public void createArticle(Article article) throws ArticleException;
     public void updateArticle(Article article);
-    public boolean deleteArticleById(Long id);
+    public void deleteArticleById(Long id);
 
     // CATEGORIES
     public Optional<Category> findCategoryById(Long id);

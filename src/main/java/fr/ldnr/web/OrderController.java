@@ -7,13 +7,12 @@ import fr.ldnr.entities.Customer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import java.util.HashMap;
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
-public class OrderController
-{
+public class OrderController {
     private final IBusinessImpl business;
 
     public OrderController(IBusinessImpl business) {
