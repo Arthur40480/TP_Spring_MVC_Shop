@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.ui.Model;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class CartController {
 
@@ -33,6 +35,7 @@ public class CartController {
     @GetMapping("/addToCart")
     public String addToCart(Long articleId) {
         business.addToCart(articleId);
+        log.info("Article ajouter au panier avec succès");
         return "redirect:/index";
     }
 

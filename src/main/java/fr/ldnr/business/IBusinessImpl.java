@@ -8,16 +8,20 @@ import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Category;
 import fr.ldnr.entities.Customer;
 import fr.ldnr.entities.Commande;
+import fr.ldnr.exceptions.ArticleException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 @Service
 public class IBusinessImpl implements IBusiness {
@@ -34,19 +38,7 @@ public class IBusinessImpl implements IBusiness {
 
     public IBusinessImpl() {
         this.cart = new HashMap<Long, Article>();
-    }
 
-    public HashMap<String, Object> getUserInfos() {
-        if(!isUserAuthenticated()){
-            return null;
-        }else {
-            HashMap<String, Object> userInfos = new HashMap<String, Object>();
-            String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-            List<GrantedAuthority> userRoles = new ArrayList<>(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-            userInfos.put("userName", userName);
-            userInfos.put("userRoles", userRoles);
-            return userInfos;
-        }
     }
 
     /**
@@ -58,6 +50,7 @@ public class IBusinessImpl implements IBusiness {
         return authentication != null && authentication.isAuthenticated()
                 && !(authentication instanceof AnonymousAuthenticationToken);
     }
+
     /**
      * Retourne le panier
      * @return HashMap qui est le panier
@@ -73,7 +66,6 @@ public class IBusinessImpl implements IBusiness {
     public void addToCart(Long articleId) {
         Article articleToAdd = cart.get(articleId);
         if (articleToAdd != null) {
-            System.out.println("Article déja présent dans le panier");
             articleToAdd.setQuantity(articleToAdd.getQuantity() + 1);
         } else {
             Optional<Article> optionalToAdd = articleRepository.findById(articleId);
@@ -147,17 +139,15 @@ public class IBusinessImpl implements IBusiness {
     /**
      * Crée un nouvel article
      * @param newArticle Article à créer
-     * @return true si l'article à été crée avec succès, false sinon
      */
-    public boolean createArticle(Article newArticle) {
+    public void createArticle(Article newArticle) throws ArticleException {
         List<Article> articleList = articleRepository.findAll();
         for (Article article : articleList) {
             if (newArticle.getDescription().equals(article.getDescription()) && newArticle.getBrand().equals(article.getBrand())) {
-                return false;
+                throw new ArticleException("Impossible de créer deux fois le même article");
             }
         }
         articleRepository.save(newArticle);
-        return true;
     }
 
     /**
@@ -179,16 +169,9 @@ public class IBusinessImpl implements IBusiness {
     /**
      * Supprime un article par son id
      * @param id id de l'article à supprimer
-     * @return true si l'article à été supprimé avec succès, false sinon
      */
-    public boolean deleteArticleById(Long id) {
-        Optional<Article> optional = articleRepository.findById(id);
-        if(optional.isPresent()) {
-            articleRepository.deleteById(id);
-            return true;
-        }else {
-            return false;
-        }
+    public void deleteArticleById(Long id) {
+        articleRepository.deleteById(id);
     }
 
     /**

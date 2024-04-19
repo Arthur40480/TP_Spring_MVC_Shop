@@ -59,6 +59,9 @@
                     </div>
                 </div>
             </div>
+            <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                <p th:text="${errorMessage}"></p>
+            </div>
         </div>
     </body>
 </html>

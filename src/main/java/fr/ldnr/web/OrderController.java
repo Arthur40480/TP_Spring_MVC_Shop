@@ -16,9 +16,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @Controller
-public class OrderController
-{
-    private final ObjectMapper objectMapper = new ObjectMapper();
+public class OrderController {
     private final IBusinessImpl business;
 
     public OrderController(IBusinessImpl business) {
