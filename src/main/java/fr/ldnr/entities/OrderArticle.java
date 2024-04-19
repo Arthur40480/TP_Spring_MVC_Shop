@@ -6,24 +6,28 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class OrderItem implements Serializable
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idOrderItem;
-    private Long idArticle;
-    private int quantity;
-    private double unitaryPrice;
-    private Long idOrder;
+public class OrderArticle implements Serializable {
 
-    public OrderItem ( Long idArticle , int quantity , double unitaryPrice)
-    {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idOrderItem;
+    @NotNull
+    private Long idArticle;
+    @NotNull
+    private int quantity;
+    @NotNull
+    private double unitaryPrice;
+    @ManyToOne
+    private Commande commande;
+
+    public OrderArticle(Long idArticle, int quantity, double unitaryPrice, Commande commande) {
         this.idArticle = idArticle;
         this.quantity = quantity;
         this.unitaryPrice = unitaryPrice;
+        this.commande = commande;
     }
 }

@@ -1,16 +1,16 @@
 package fr.ldnr.web;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.ldnr.business.IBusinessImpl;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Customer;
 import fr.ldnr.entities.Commande;
+import fr.ldnr.entities.OrderArticle;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -34,22 +34,23 @@ public class OrderController {
     }
 
     @GetMapping("/annulationOrder")
-    public String annulationOrder()
-    {
-        return "redirect:/cart";
+    public String annulationOrder() {
+        business.displayCart().clear();
+        return "redirect:/index";
     }
 
     @GetMapping("/confirmationOrder")
-    public String confirmationOrder(Model model , @RequestParam(name = "customId") Long id) throws JsonProcessingException {
+    public String confirmationOrder(Model model , @RequestParam(name = "customId") Long id) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
-
-        Optional<Customer> customerbdd = business.findCustomerById(id);
-        Customer customer = customerbdd.get();
-
-        Commande order = new Commande(business.getTotal() , customer.getId());
-        business.createOrder(order);
-        System.out.println(customer);
+        Optional<Customer> optionalCustomer = business.findCustomerById(id);
+        if(optionalCustomer.isPresent()) {
+            Customer customer = optionalCustomer.get();
+            Commande commande = new Commande(business.getTotal(), customer);
+            business.createOrder(commande);
+            business.createOrderArticleFromCart(business.displayCart(), commande);
+        }
+        business.displayCart().clear();
         return "confirmationOrder";
     }
 }

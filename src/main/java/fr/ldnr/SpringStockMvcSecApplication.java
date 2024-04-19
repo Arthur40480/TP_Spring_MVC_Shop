@@ -1,9 +1,7 @@
 package fr.ldnr;
 
-import fr.ldnr.dao.CategoryRepository;
-import fr.ldnr.dao.OrderItemRepository;
-import fr.ldnr.entities.Category;
-import fr.ldnr.entities.OrderItem;
+import fr.ldnr.dao.*;
+import fr.ldnr.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,15 +18,20 @@ import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 public class SpringStockMvcSecApplication implements CommandLineRunner {
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@Autowired
-	private OrderItemRepository orderItemRepository;
+	private OrderArticleRepository orderItemRepository;
 
 	@Autowired
 	private ArticleRepository articleRepository;
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringStockMvcSecApplication.class, args);
@@ -44,9 +47,8 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 		Category camera = categoryRepository.save(new Category("camera" , "zoom optique x50"));
 		Category HIFI = categoryRepository.save(new Category("HI-FI" , "son , audio enceinte "));
 		Category JV = categoryRepository.save(new Category("jeux-video" , "ps5/xbox/nintendo/pc"));
-
 		Article samsung = articleRepository.save(new Article("Samsung", "S10", 599 , phone));
-		OrderItem orderItem = orderItemRepository.save(new OrderItem(samsung.getId(), samsung.getQuantity(), 599));
+
 		articleRepository.save(new Article("Apple", "15Pro", 1099 , tv));
 		articleRepository.save(new Article("Apple", "XS", 859 , pc));
 

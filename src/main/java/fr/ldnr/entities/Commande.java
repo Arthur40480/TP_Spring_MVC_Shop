@@ -6,21 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class Commande implements Serializable
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCommande;
-    private double amount;
-    private Long idCustomer;
+public class Commande implements Serializable {
 
-    public Commande(double amount , Long idCustomer)
-    {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idCommande;
+    @NotNull
+    private double amount;
+    @ManyToOne
+    private Customer customer;
+
+    public Commande(double amount, Customer customer) {
         this.amount = amount;
-        this.idCustomer = idCustomer;
+        this.customer = customer;
     }
 }
