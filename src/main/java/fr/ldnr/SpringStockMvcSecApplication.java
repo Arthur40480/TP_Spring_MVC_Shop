@@ -1,7 +1,9 @@
 package fr.ldnr;
 
 import fr.ldnr.dao.CategoryRepository;
+import fr.ldnr.dao.OrderItemRepository;
 import fr.ldnr.entities.Category;
+import fr.ldnr.entities.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +14,10 @@ import fr.ldnr.entities.Article;
 
 @SpringBootApplication
 public class SpringStockMvcSecApplication implements CommandLineRunner {
-	
+
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+
 	@Autowired
 	private ArticleRepository articleRepository;
 
@@ -34,7 +39,8 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 		Category HIFI = categoryRepository.save(new Category("HI-FI" , "son , audio enceinte "));
 		Category JV = categoryRepository.save(new Category("jeux-video" , "ps5/xbox/nintendo/pc"));
 
-		articleRepository.save(new Article("Samsung", "S10", 599 , phone));
+		Article samsung = articleRepository.save(new Article("Samsung", "S10", 599 , phone));
+		OrderItem orderItem = orderItemRepository.save(new OrderItem(samsung.getId(), samsung.getQuantity(), 599));
 		articleRepository.save(new Article("Apple", "15Pro", 1099 , tv));
 		articleRepository.save(new Article("Apple", "XS", 859 , pc));
 

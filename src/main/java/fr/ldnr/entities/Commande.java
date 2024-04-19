@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashMap;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
@@ -15,16 +14,13 @@ public class Commande implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCommande;
+    private double amount;
+    private Long idCustomer;
 
-
-    private Customer customer;
-
-    private HashMap<Long , Article> cart;
-
-    public Commande(Customer customer , HashMap<Long , Article> cart)
+    public Commande(double amount , Long idCustomer)
     {
-        this.customer = customer;
-        this.cart = cart;
+        this.amount = amount;
+        this.idCustomer = idCustomer;
     }
 }
