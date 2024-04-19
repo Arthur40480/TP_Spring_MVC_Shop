@@ -3,12 +3,13 @@
       xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate = "layout" lang="fr">
     <head>
-        <meta charset="ISO-8859-1">
-        <title>Accès interdit</title>
+        <meta charset="utf-8">
+        <title>AccÃ¨s interdit</title>
     </head>
     <body>
         <div layout:fragment="content">
-            <h2> Vous n'avez pas les droits d'accès !</h2>
+            <a th:href="@{/index}"><img src="../static/img/err403.png" th:src="@{img/err403.png}" alt="Erreur 403 AccÃ¨s interdit"><br>
+            Retour Ã  l'accueil</a>
         </div>
     </body>
 </html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://thymeLeaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate = "layout" lang="fr">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Erreur 404</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <a th:href="@{/index}"><img src="../static/img/404-chuck-norris.png" th:src="@{img/404-chuck-norris.png}" alt="Erreur 404 Chuck Norris"></a>
+</div>
+</body>
+</html>

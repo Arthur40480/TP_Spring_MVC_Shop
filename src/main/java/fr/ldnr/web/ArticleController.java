@@ -133,4 +133,9 @@ public class ArticleController {
     public String error() {
         return "403";
     }
+
+    @GetMapping("/404")
+    public String error404() {
+        return "404";
+    }
 }
