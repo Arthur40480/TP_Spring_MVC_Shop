@@ -1,14 +1,10 @@
 package fr.ldnr.business;
 
-import fr.ldnr.entities.Article;
-import fr.ldnr.entities.Category;
-import fr.ldnr.entities.Customer;
-import fr.ldnr.entities.Commande;
+import fr.ldnr.entities.*;
 import fr.ldnr.exceptions.ArticleException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,4 +37,7 @@ public interface IBusiness {
 
     //ORDER
     public void createOrder(Commande order);
+
+    //ORDER_ITEM
+    public void createOrderArticle(OrderArticle orderItem);
 }
