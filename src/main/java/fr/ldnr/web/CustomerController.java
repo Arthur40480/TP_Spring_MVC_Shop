@@ -1,6 +1,5 @@
 package fr.ldnr.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.ldnr.business.IBusinessImpl;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Customer;
@@ -18,8 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class CustomerController {
+
     private final IBusinessImpl business;
-    private ObjectMapper objectMapper = new ObjectMapper();
+
     public CustomerController(IBusinessImpl business) {
         this.business = business;
     }
@@ -31,6 +31,9 @@ public class CustomerController {
         model.addAttribute("customer", new Customer());
 
         HashMap<Long, Article> cart = business.displayCart();
+        if(cart.isEmpty()) {
+            return "redirect:/403";
+        }
         return "CustomerForm";
     }
 
@@ -38,7 +41,6 @@ public class CustomerController {
     public String save(Model model, @Valid Customer customer , BindingResult bindingResult) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
-
         if(bindingResult.hasErrors()) {
             log.error("Erreur de validation du formulaire: {}", bindingResult.getAllErrors());
             return "CustomerForm";

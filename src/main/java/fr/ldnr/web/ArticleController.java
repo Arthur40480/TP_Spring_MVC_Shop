@@ -130,12 +130,16 @@ public class ArticleController {
     }
 
     @GetMapping("/403")
-    public String error() {
+    public String error(Model model) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         return "403";
     }
 
     @GetMapping("/404")
-    public String error404() {
+    public String error404(Model model) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         return "404";
     }
 }

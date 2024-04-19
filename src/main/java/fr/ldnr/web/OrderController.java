@@ -25,9 +25,13 @@ public class OrderController {
 
     @GetMapping("/validateOrder")
     public String validate(Model model) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         Customer customer = (Customer) model.getAttribute("customer");
         HashMap<Long , Article> cart = business.displayCart();
-
+        if(cart.isEmpty()) {
+            return "redirect:/403";
+        }
         model.addAttribute("customer" , customer);
         model.addAttribute("listArticle", cart);
         return "validateOrder";
@@ -49,6 +53,11 @@ public class OrderController {
             Commande commande = new Commande(business.getTotal(), customer);
             business.createOrder(commande);
             business.createOrderArticleFromCart(business.displayCart(), commande);
+        }else {
+            return "redirect:/403";
+        }
+        if(business.displayCart().isEmpty()) {
+            return "redirect:/403";
         }
         business.displayCart().clear();
         return "confirmationOrder";

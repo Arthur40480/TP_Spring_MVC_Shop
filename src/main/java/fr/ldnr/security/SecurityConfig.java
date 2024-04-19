@@ -15,21 +15,13 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
-    // @Autowired
-    // BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    DataSource dataSource; //pointe vers la base de donnée
+    DataSource dataSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder pe = passwordEncoder();
-        // Il est impératif de toujours stocké en mémoire ou en base des mots de pass crypté
-        // création d'utilisateurs en mémoir avec mot de passe crypté et des rôles distincts
-        // auth.inMemoryAuthentication().withUser("arthur").password(pe.encode("123")).roles("ADMIN", "USER");
-        // auth.inMemoryAuthentication().withUser("mohamed").password(pe.encode("123")).roles("USER");
-        // indique à Spring l'algo utilisé pour le cryptage des pwd
-        // auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder());
 
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
@@ -44,20 +36,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         http.formLogin()
             .permitAll()
             .and()
-        // Attribution des accès aux pages en fonction des rôles
+
             .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("ADMIN")
             .antMatchers("/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("USER")
             .and()
-            .exceptionHandling().accessDeniedPage("/403"); // Au cas ou un user tente d'accéder à une page non authorisée
+            .exceptionHandling().accessDeniedPage("/403");
 
     }
 
     @Bean
-        //Annotation permettant à cet objet d'être inscrit dans le contexte de Spring
-            // Et delors peut être utilisé ailleurs dans l'appli via @Autowired
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 }
