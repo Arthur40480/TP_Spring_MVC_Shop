@@ -10,9 +10,12 @@
 <body>
 <div layout:fragment="content">
     <div class="container">
-       <P> votre commande arrive</P>
+       <h2 class="text-center"> votre commande arrive</h2>
+        <a th:href="@{/index}"><img src="../static/img/assurer-vos-colis.jpg" th:src="@{img/assurer-vos-colis.jpg}" alt="Livreur qui charge le camion"></a>
     </div>
-    <a class="btn btn-success"th:href="@{/index}">return a l'acceuil</a>
+    <div class="text-center">
+        <a class="btn btn-success"th:href="@{/index}">return a l'acceuil</a>
+    </div>
 </div>
 </body>
 </html>

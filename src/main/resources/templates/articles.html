@@ -4,17 +4,25 @@
       layout:decorate = "layout" lang="fr"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
     <head>
-        <meta charset="ISO-8859-1">
+        <meta charset="utf-8">
         <title>Insert title here</title>
     </head>
     <body>
         <div layout:fragment = "content">
             <div class = "container">
-                <ul class="nav nav-pills">
-                    <li th:each="cat:${listCategories}">
-                        <a th:href = "@{/index (id=${cat.id} , category=${cat.name})}" th:text = "${cat.name}"></a>
-                    </li>
-                </ul>
+                <div class = "panel panel-success">
+                    <div class = "panel-heading">Catégories</div>
+                    <div class = "panel-body">
+                        <br>
+                        <table class = "table" >
+                            <tr>
+                                <td th:each="cat:${listCategories}">
+                                    <a th:href = "@{/index (id=${cat.id} , category=${cat.name})}" th:text = "${cat.name}"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             <br>
             <div class = "panel panel-primary">
                 <div class = "panel-heading">Liste des Articles</div>
