@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Erreur 500</title>
+  <link rel = "stylesheet" href ="../static/css/bootstrap.min.css" th:href = "@{css/bootstrap.min.css}">
+  <link rel = "stylesheet" href ="../static/css/style.css" th:href = "@{css/style.css}">
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="text-center">
+    <h2>Erreur 500</h2>
+    <p>Une erreur interne est survennu, veuillez réessayer plus tard</p>
+    <a th:href="@{/index}"><img src="../../static/img/err500.png" th:src="@{img/err500.png}" alt="Chat qui a cassé l'ordinateur"><br>
+      <button class="btn btn-warning">Retour à l'accueil</button></a>
+  </div>
+</div>
+</body>
+</html>

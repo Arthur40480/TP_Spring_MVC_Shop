@@ -142,10 +142,12 @@ public class ArticleController {
         return "403";
     }
 
-/*    @GetMapping("/404")
-    public String error404(Model model) {
-        boolean isUserAuthenticated = business.isUserAuthenticated();
-        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
-        return "404";
-    }*/
+    //pour tester l'erreur 500 (créer un crash)
+    /*
+    @GetMapping("/test500")
+    public String test500(){
+        return "/jExistePas";
+    }
+   */
+
 }
