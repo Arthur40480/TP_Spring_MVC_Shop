@@ -27,15 +27,24 @@ public class OrderController {
     public String validate(Model model) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
+
         Customer customer = (Customer) model.getAttribute("customer");
         HashMap<Long , Article> cart = business.displayCart();
-        if(cart.isEmpty()) {
-            return "redirect:/403";
+        if(customer == null || business.displayCart().isEmpty()) {
+            if(business.displayCart().isEmpty()) {
+                model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
+                return "redirect:/cart";
+            }else {
+                model.addAttribute("errorMessage", "Veuillez remplir les informations avant de valider votre commande");
+                return "redirect:/CustomerForm";
+            }
+        }else {
+            model.addAttribute("customer" , customer);
+            model.addAttribute("listArticle", cart);
+            return "validateOrder";
         }
-        model.addAttribute("customer" , customer);
-        model.addAttribute("listArticle", cart);
-        return "validateOrder";
     }
+
 
     @GetMapping("/annulationOrder")
     public String annulationOrder() {
@@ -44,23 +53,26 @@ public class OrderController {
     }
 
     @GetMapping("/confirmationOrder")
-    public String confirmationOrder(Model model , @RequestParam(name = "customId") Long id) {
+    public String confirmationOrder(Model model) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
-        Optional<Customer> optionalCustomer = business.findCustomerById(id);
-        if(optionalCustomer.isPresent()) {
-            Customer customer = optionalCustomer.get();
+
+        Customer customer = (Customer) model.getAttribute("customer");
+        if(customer == null || business.displayCart().isEmpty()) {
+            if(business.displayCart().isEmpty()) {
+                model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
+                return "redirect:/cart";
+            }else {
+                model.addAttribute("errorMessage", "Veuillez remplir les informations avant de valider votre commande");
+                 return "redirect:/CustomerForm";
+                }
+        }else {
             Commande commande = new Commande(business.getTotal(), customer);
             business.createOrder(commande);
             business.createOrderArticleFromCart(business.displayCart(), commande);
-        }else {
-            return "redirect:/403";
+            business.displayCart().clear();
+            return "confirmationOrder";
         }
-        if(business.displayCart().isEmpty()) {
-            return "redirect:/403";
-        }
-        business.displayCart().clear();
-        return "confirmationOrder";
     }
 }
 

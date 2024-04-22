@@ -25,6 +25,10 @@ public class CartController {
     public String cart(Model model) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
+        String errorMsg = (String) model.getAttribute("errorMessage");
+        System.out.println("Message d'erreur: " + errorMsg);
+        model.addAttribute("errorMessage", model.getAttribute("errorMessage"));
+
         HashMap<Long, Article> cart = business.displayCart();
         double total = business.getTotal();
         model.addAttribute("total", total);

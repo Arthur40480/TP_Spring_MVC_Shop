@@ -29,10 +29,9 @@ public class CustomerController {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         model.addAttribute("customer", new Customer());
-
-        HashMap<Long, Article> cart = business.displayCart();
-        if(cart.isEmpty()) {
-            return "redirect:/403";
+        if(business.displayCart().isEmpty()) {
+            model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
+            return "redirect:/cart";
         }
         return "CustomerForm";
     }

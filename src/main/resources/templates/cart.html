@@ -32,6 +32,9 @@
                                     </svg> RemoveToCart</a>
                             </td>
                         </tr>
+                        <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                            <p th:text="${errorMessage}"></p>
+                        </div>
                     </table>
                     <div>
                         Total: <span th:text="${total}"></span>$
