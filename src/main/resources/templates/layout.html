@@ -10,7 +10,7 @@
         <nav class = "navbar navbar-default">
             <div class = "container-fluid">
                 <div class = "navbar-header">
-                    <a class ="navbar-brand" href ="#">my demo site</a>
+                    <a class ="navbar-brand" href ="#">Shop</a>
                 </div>
                 <ul class="nav navbar-nav navbar-left">
                     <li>
@@ -53,7 +53,7 @@
 
                     <li th:if="${isUserAuthenticated}">
                         <p class="utilisateur">
-                            <span th:text="${#authentication.name} ? 'Bonjour ' + ${#authentication.name} : ''"></span><br>
+                            <strong><span th:text="${#authentication.name} ? 'Bonjour ' + ${#authentication.name} : ''"></span></strong><br>
                             <span sec:authorize="hasRole('ROLE_ADMIN')" class="font-weight-bold">(ADMIN) </span>
                             <span sec:authorize="hasRole('ROLE_USER')" class="font-weight-bold">(USER)</span>
                         </p>
