@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th = "http://thymeLeaf.org"
-      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate = "layout" lang="fr">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml" lang="fr">
     <head>
         <meta charset="utf-8">
         <title>Accès interdit</title>
+        <link rel = "stylesheet" href ="../static/css/bootstrap.min.css" th:href = "@{css/bootstrap.min.css}">
+        <link rel = "stylesheet" href ="../static/css/style.css" th:href = "@{css/style.css}">
     </head>
     <body>
         <div layout:fragment="content">
             <div class="text-center">
-            <a th:href="@{/index}"><img src="../../../static/img/err403.png" th:src="@{img/err403.png}" alt="Erreur 403 Accès interdit"></a><br>
+            <a th:href="@{/index}"><img src="../../static/img/err403.png" th:src="@{img/err403.png}" alt="Erreur 403 Accès interdit"></a><br>
                 <button class="btn btn-warning"><a th:href="@{/index}">Retour à l'accueil</a></button>
             </div>
         </div>

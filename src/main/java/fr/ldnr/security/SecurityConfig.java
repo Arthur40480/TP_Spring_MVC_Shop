@@ -38,10 +38,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
             .and()
 
             .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("ADMIN")
-            .antMatchers("/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("USER")
-            .and()
-            .exceptionHandling().accessDeniedPage("/403");
-
+            .antMatchers("/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("USER");
     }
 
     @Bean
