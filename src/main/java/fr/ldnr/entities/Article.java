@@ -24,7 +24,7 @@ public class Article implements Serializable {
 	private String brand;
 	@NotNull @Size(min=1,max=50)
 	private String description;
-	@DecimalMin("50")
+	@DecimalMin("1")
 	private double price;
 	@ManyToOne
 	private Category category;

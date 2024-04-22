@@ -7,6 +7,7 @@ import fr.ldnr.exceptions.ArticleException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
 @Controller
@@ -65,6 +67,8 @@ public class ArticleController {
 
     @GetMapping("/updateForm")
     public String updateForm(Model model, @RequestParam(name = "idArticle") Long id) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         List<Category> categories = business.findAllCategories();
         Optional<Article> optionalArticleToUpdate = business.findArticleById(id);
         if(optionalArticleToUpdate.isPresent()) {
@@ -78,6 +82,8 @@ public class ArticleController {
 
     @PostMapping("/update")
     public String update(Model model, Long id, @Valid Article articleToUpdate, BindingResult bindingResult) {
+        boolean isUserAuthenticated = business.isUserAuthenticated();
+        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         List<Category> categories = business.findAllCategories();
         model.addAttribute("listCategories", categories);
 
@@ -136,10 +142,10 @@ public class ArticleController {
         return "403";
     }
 
-    @GetMapping("/404")
+/*    @GetMapping("/404")
     public String error404(Model model) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         return "404";
-    }
+    }*/
 }
