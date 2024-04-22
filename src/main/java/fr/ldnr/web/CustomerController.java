@@ -30,8 +30,9 @@ public class CustomerController {
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         model.addAttribute("customer", new Customer());
         if(business.displayCart().isEmpty()) {
+            model.addAttribute("listArticle", business.displayCart());
             model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
-            return "redirect:/cart";
+            return "cart";
         }
         return "CustomerForm";
     }

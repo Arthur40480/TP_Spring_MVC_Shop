@@ -32,11 +32,13 @@ public class OrderController {
         HashMap<Long , Article> cart = business.displayCart();
         if(customer == null || business.displayCart().isEmpty()) {
             if(business.displayCart().isEmpty()) {
+                model.addAttribute("listArticle", business.displayCart());
                 model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
-                return "redirect:/cart";
+                return "cart";
             }else {
+                model.addAttribute("customer", new Customer());
                 model.addAttribute("errorMessage", "Veuillez remplir les informations avant de valider votre commande");
-                return "redirect:/CustomerForm";
+                return "CustomerForm";
             }
         }else {
             model.addAttribute("customer" , customer);
@@ -44,7 +46,6 @@ public class OrderController {
             return "validateOrder";
         }
     }
-
 
     @GetMapping("/annulationOrder")
     public String annulationOrder() {
@@ -60,11 +61,13 @@ public class OrderController {
         Customer customer = (Customer) model.getAttribute("customer");
         if(customer == null || business.displayCart().isEmpty()) {
             if(business.displayCart().isEmpty()) {
+                model.addAttribute("listArticle", business.displayCart());
                 model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
-                return "redirect:/cart";
+                return "cart";
             }else {
+                model.addAttribute("customer", new Customer());
                 model.addAttribute("errorMessage", "Veuillez remplir les informations avant de valider votre commande");
-                 return "redirect:/CustomerForm";
+                return "CustomerForm";
                 }
         }else {
             Commande commande = new Commande(business.getTotal(), customer);
