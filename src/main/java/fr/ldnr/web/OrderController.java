@@ -1,6 +1,5 @@
 package fr.ldnr.web;
 
-
 import fr.ldnr.business.IBusinessImpl;
 import fr.ldnr.entities.Article;
 import fr.ldnr.entities.Customer;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 
 import java.util.HashMap;
 
@@ -56,15 +54,12 @@ public class OrderController {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
 
-        System.out.println(customer);
         if(business.displayCart().isEmpty()) {
-            System.out.println("Le panier est vide !");
             model.addAttribute("listArticle", business.displayCart());
             model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
             return "cart";
         }
         if(customer.getEmail() == null) {
-            System.out.println("Le customer est null");
             model.addAttribute("customer", new Customer());
             model.addAttribute("errorMessage", "Veuillez remplir les informations avant de valider votre commande");
             return "CustomerForm";
