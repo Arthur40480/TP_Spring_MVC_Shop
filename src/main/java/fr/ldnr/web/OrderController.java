@@ -34,7 +34,7 @@ public class OrderController {
             model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
             return "cart";
         }
-        if(customer == null) {
+        if(customer.getEmail() == null) {
             model.addAttribute("customer", new Customer());
             model.addAttribute("errorMessage", "Veuillez remplir les informations avant de valider votre commande");
             return "CustomerForm";
@@ -47,7 +47,7 @@ public class OrderController {
     @GetMapping("/annulationOrder")
     public String annulationOrder(Model model) {
         business.displayCart().clear();
-        model.addAttribute("customer" , null);
+        model.addAttribute("customer" , new Customer());
         return "redirect:/index";
     }
 
@@ -63,7 +63,7 @@ public class OrderController {
             model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
             return "cart";
         }
-        if(customer == null) {
+        if(customer.getEmail() == null) {
             System.out.println("Le customer est null");
             model.addAttribute("customer", new Customer());
             model.addAttribute("errorMessage", "Veuillez remplir les informations avant de valider votre commande");
@@ -73,7 +73,7 @@ public class OrderController {
         business.createOrder(commande);
         business.createOrderArticleFromCart(business.displayCart(), commande);
         business.displayCart().clear();
-        model.addAttribute("customer" , null);
+        model.addAttribute("customer" , new Customer());
         return "confirmationOrder";
     }
 
