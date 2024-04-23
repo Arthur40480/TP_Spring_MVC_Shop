@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.util.HashMap;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -38,7 +39,7 @@ public class CustomerController {
     }
 
     @PostMapping("/saveCustomer")
-    public String save(Model model, @Valid Customer customer , BindingResult bindingResult) {
+    public String save(Model model, @Valid Customer customer , BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         if(bindingResult.hasErrors()) {
@@ -48,9 +49,9 @@ public class CustomerController {
 
         business.createCustomer(customer);
         HashMap<Long , Article> cart = business.displayCart();
-        model.addAttribute("customer", customer);
-        model.addAttribute("listArticle", cart);
+        redirectAttributes.addFlashAttribute("customer", customer);
+        redirectAttributes.addFlashAttribute("listArticle", cart);
         log.info("Customer crée avec succès: {}", customer);
-        return "validateOrder";
+        return "redirect:/validateOrder";
     }
 }

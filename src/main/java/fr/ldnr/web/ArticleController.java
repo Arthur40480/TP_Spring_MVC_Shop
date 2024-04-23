@@ -34,7 +34,6 @@ public class ArticleController {
         this.business = business;
     }
 
-    //@RequestMapping(value="/index", method=RequestMethod.GET)
     @GetMapping("/index")
     public String index(Model model, Long id , @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw, Authentication authentication) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
@@ -141,11 +140,4 @@ public class ArticleController {
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         return "403";
     }
-
-/*    @GetMapping("/404")
-    public String error404(Model model) {
-        boolean isUserAuthenticated = business.isUserAuthenticated();
-        model.addAttribute("isUserAuthenticated", isUserAuthenticated);
-        return "404";
-    }*/
 }
