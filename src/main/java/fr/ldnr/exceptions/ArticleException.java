@@ -1,11 +1,7 @@
 package fr.ldnr.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.stereotype.Service;
-import fr.ldnr.entities.Article;
 
 @Service
 @NoArgsConstructor
