@@ -14,5 +14,4 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     Page<Article> findByDescriptionContains(String description, Pageable pageable);
     Page<Article> findByCategoryId(Long id, Pageable pageable);
-    List<Article> findByBrandContains(String str);
 }
