@@ -10,12 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.ldnr.dao.ArticleRepository;
 import fr.ldnr.entities.Article;
 
-import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
-import org.springframework.boot.web.server.ErrorPage;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-
 @SpringBootApplication
 public class SpringStockMvcSecApplication implements CommandLineRunner {
 	@Autowired
