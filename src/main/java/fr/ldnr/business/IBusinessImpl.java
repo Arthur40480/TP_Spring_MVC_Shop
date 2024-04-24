@@ -89,6 +89,16 @@ public class IBusinessImpl implements IBusiness {
         return total[0];
     }
 
+    /**
+     * Récupère la quantité d'un article dans le panier
+     * @param articleId article concerner
+     * @return la quantité
+     */
+    public int getQuantityInCart(Long articleId) {
+        Article articleInCart = cart.get(articleId);
+        return (articleInCart != null) ? articleInCart.getQuantity() : 0;
+    }
+
     //          ARTICLES
     /**
      * Récupère tous les articles
