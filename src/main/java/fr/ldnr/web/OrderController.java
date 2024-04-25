@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.HashMap;
 
 @Controller
-@SessionAttributes("customer")
+@SessionAttributes("customer") //gère le client
 public class OrderController {
     private final IBusinessImpl business;
 
@@ -21,7 +21,7 @@ public class OrderController {
         this.business = business;
     }
 
-    //code OK de lundi
+    //code OK de lundi 22/4
     @GetMapping("/validateOrder")
     public String validate(Model model) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
@@ -47,7 +47,7 @@ public class OrderController {
     }
 
     //Code qui pose souci
-    /*
+/*
     @GetMapping("/validateOrder")
     public String validate(@ModelAttribute("customer") Customer customer, Model model) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
@@ -68,7 +68,7 @@ public class OrderController {
         model.addAttribute("listArticle", cart);
         return "validateOrder";
     }
-     */
+*/
 
     @GetMapping("/annulationOrder")
     public String annulationOrder(Model model) {
