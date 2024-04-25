@@ -1,0 +1,10 @@
+Spring boot : 2.5.4
+Java : 1.8
+xmlns et Maven : 4.0.0
+thymeleaf : 3.0.4
+Bootstrap : 3.3.7
+spring security : 3.0.4
+junit : 4.12
+lombok : 1.18.20
+thymleaf layout : 2.5.3
+mariadb : 11.2.2
