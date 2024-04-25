@@ -25,7 +25,6 @@ public class CartController {
         boolean isUserAuthenticated = business.isUserAuthenticated();
         model.addAttribute("isUserAuthenticated", isUserAuthenticated);
         String errorMsg = (String) model.getAttribute("errorMessage");
-        System.out.println("Message d'erreur: " + errorMsg);
         model.addAttribute("errorMessage", model.getAttribute("errorMessage"));
 
         HashMap<Long, Article> cart = business.displayCart();

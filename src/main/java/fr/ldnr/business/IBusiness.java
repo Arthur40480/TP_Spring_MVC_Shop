@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface IBusiness {
 
     // ARTICLES
-    public List<Article> findAllArticle();
     public Optional<Article> findArticleById(Long id);
     public Page<Article> findArticleByDescriptionContains(String keyword, Pageable pageable);
     public Page<Article> findArticlesByCategoryId(Long categoryId, Pageable pageable);

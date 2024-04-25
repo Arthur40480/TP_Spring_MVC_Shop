@@ -30,11 +30,6 @@ public class ArticleController {
         this.business = business;
     }
 
-    @RequestMapping("/greating")
-    public @ResponseBody String greating() {
-        return business.great();
-    }
-
     @GetMapping("/index")
     public String index(Model model, Long id , @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "keyword", defaultValue = "") String kw, Authentication authentication) {
         boolean isUserAuthenticated = business.isUserAuthenticated();
