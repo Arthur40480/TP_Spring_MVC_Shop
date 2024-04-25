@@ -33,7 +33,7 @@
                 <br>
                 <table class = "table" >
                     <tr>
-                        <th>Id</th> <th>Brand</th> <th>Description</th> <th>Price</th> <th>Category</th>
+                        <th>Id</th> <th>Brand</th> <th>Description</th> <th>Price</th> <th>Category</th> <th>Quantity</th>
                     </tr>
                     <tr th:each="a : ${listArticle.entrySet()}">
                         <td th:text="${a.value.id}"></td>

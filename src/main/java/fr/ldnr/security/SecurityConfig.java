@@ -27,7 +27,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .usersByUsernameQuery("SELECT username AS principal, password AS credentials, active FROM T_Users where username=?")
                 .authoritiesByUsernameQuery("SELECT username AS principal, role AS role FROM T_Users_Roles where username=?")
-                .rolePrefix("ROLE_") //Ajout d'un prefix, par exemple si le role est ADMIN => ROLE_ADMIN
+                .rolePrefix("ROLE_")
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -37,8 +37,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
 
-            .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("ADMIN")
-            .antMatchers("/validateOrder" , "/toOrder" , "/CustomerForm").hasRole("USER");
+            .authorizeRequests().antMatchers("/delete", "/save", "/updateForm", "/article" , "/validateOrder", "/confirmationOrder", "/CustomerForm").hasRole("ADMIN")
+            .antMatchers("/validateOrder", "/confirmationOrder", "/CustomerForm").hasRole("USER");
     }
 
     @Bean

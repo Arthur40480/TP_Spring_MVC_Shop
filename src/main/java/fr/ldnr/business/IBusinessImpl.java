@@ -31,6 +31,10 @@ public class IBusinessImpl implements IBusiness {
 
     public IBusinessImpl() { this.cart = new HashMap<Long, Article>(); }
 
+    public String great() {
+        return "Hello World";
+    }
+
     //          USERS
     /**
      * Vérifie si un utilisateur est connecter

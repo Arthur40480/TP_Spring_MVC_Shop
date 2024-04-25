@@ -35,7 +35,7 @@ public class CustomerController {
             model.addAttribute("errorMessage", "Veuillez remplir votre panier avant de valider votre commande");
             return "cart";
         }
-        return "CustomerForm";
+        return "customerForm";
     }
 
     @PostMapping("/saveCustomer")
